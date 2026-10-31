@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מדעים ז׳ – הכנה למבחן 1.11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6fb; --card:#fff; --ink:#1d2433; --muted:#5b6478; --line:#e3e7f0;
+  --brand:#3b5bdb; --brand2:#5c7cfa; --ok:#2b8a3e; --okbg:#e6f6ea; --bad:#c92a2a; --badbg:#fdecec;
+  --warn:#e67700; --warnbg:#fff4e0; --info:#1971c2; --infobg:#e7f1fc;
+  --t1:#7048e8; --t2:#1c7ed6; --t3:#e8590c; --t4:#0ca678; --t5:#e03131; --t6:#f08c00;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Rubik,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:17px;line-height:1.65}
+header{background:linear-gradient(135deg,#364fc7,#5c7cfa);color:#fff;padding:18px 22px 14px}
+header h1{margin:0;font-size:1.5rem;font-weight:800}
+header .sub{opacity:.9;font-size:.95rem}
+.progress-wrap{margin-top:10px;background:rgba(255,255,255,.25);border-radius:99px;height:10px;overflow:hidden}
+.progress-bar{height:100%;background:#ffd43b;width:0;transition:width .4s}
+nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding:8px 10px}
+nav button{flex:0 0 auto;border:0;background:transparent;font:inherit;font-size:.95rem;padding:8px 12px;border-radius:10px;cursor:pointer;color:var(--muted);white-space:nowrap}
+nav button:hover{background:#eef1f8}
+nav button.active{background:var(--brand);color:#fff}
+main{max-width:980px;margin:0 auto;padding:20px 16px 80px}
+section.view{display:none} section.view.active{display:block}
+h2{font-size:1.6rem;margin:.2em 0 .6em}
+h3{font-size:1.2rem;margin:1.2em 0 .5em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:14px 0;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.topic-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.topic-num{width:44px;height:44px;border-radius:12px;color:#fff;display:grid;place-items:center;font-weight:800;font-size:1.3rem;flex:0 0 auto}
+.box{border-radius:12px;padding:12px 16px;margin:12px 0}
+.box.key{background:var(--infobg);border-right:5px solid var(--info)}
+.box.exam{background:var(--warnbg);border-right:5px solid var(--warn)}
+.box.mistake{background:var(--badbg);border-right:5px solid var(--bad)}
+.box.tip{background:var(--okbg);border-right:5px solid var(--ok)}
+.box b.lbl{display:block;margin-bottom:4px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem}
+th,td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:right}
+th{background:#eef1f8}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.tool{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff;display:flex;gap:12px}
+.tool svg{flex:0 0 74px;height:96px}
+.tool h4{margin:0 0 4px;font-size:1.05rem}
+.tool p{margin:2px 0;font-size:.9rem}
+.tag{display:inline-block;font-size:.78rem;padding:1px 8px;border-radius:99px;background:#eef1f8;color:var(--muted);margin-left:4px}
+.tag.glass{background:#e3f2fd;color:#1565c0}.tag.plastic{background:#fff3e0;color:#e65100}.tag.rubber{background:#fce4ec;color:#ad1457}
+.tag.metal{background:#eceff1;color:#37474f}.tag.wood{background:#efebe9;color:#5d4037}.tag.porcelain{background:#f3e5f5;color:#6a1b9a}
+.btn{border:0;background:var(--brand);color:#fff;font:inherit;padding:9px 18px;border-radius:10px;cursor:pointer;font-weight:500}
+.btn:hover{background:#2f4ac0}
+.btn.ghost{background:#eef1f8;color:var(--ink)} .btn.ghost:hover{background:#e0e5f2}
+.btn.big{font-size:1.1rem;padding:12px 26px}
+.btn:disabled{opacity:.5;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+/* questions */
+.q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0}
+.q .qh{display:flex;gap:8px;align-items:center;margin-bottom:6px;color:var(--muted);font-size:.85rem}
+.q .qt{font-weight:500;margin-bottom:10px}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;background:#fff}
+.opt:hover{background:#f6f8fd}
+.opt input{margin-top:6px}
+.opt.correct{background:var(--okbg);border-color:var(--ok)}
+.opt.wrong{background:var(--badbg);border-color:var(--bad)}
+.q input[type=text],.q select,.q textarea{font:inherit;border:1px solid #c9d0de;border-radius:8px;padding:6px 10px;background:#fff}
+.q textarea{width:100%;min-height:110px}
+.q input.correct,.q select.correct{border-color:var(--ok);background:var(--okbg)}
+.q input.wrong,.q select.wrong{border-color:var(--bad);background:var(--badbg)}
+.cl-row{display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px dashed var(--line);padding:6px 0}
+.cl-row span{flex:1}
+.fb{margin-top:10px;border-radius:10px;padding:10px 12px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--okbg);color:#1b5e20}.fb.bad{background:var(--badbg);color:#8b1a1a}.fb.neutral{background:var(--infobg)}
+.model{background:#f8f9fc;border:1px dashed #b7c0d6;border-radius:10px;padding:10px 12px;margin-top:8px}
+.chk{display:flex;gap:8px;align-items:flex-start;margin:4px 0}
+.score-big{font-size:3rem;font-weight:800}
+.chip{display:inline-block;padding:2px 10px;border-radius:99px;color:#fff;font-size:.8rem}
+/* home */
+.topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:transform .15s}
+.tcard:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.tcard .meter{height:6px;background:#eef1f8;border-radius:99px;margin-top:6px;overflow:hidden}
+.tcard .meter i{display:block;height:100%;background:var(--ok)}
+ol.plan li{margin:6px 0}
+/* flashcards */
+.fc-stage{perspective:1000px;margin:16px auto;max-width:560px}
+.fc{position:relative;height:260px;transform-style:preserve-3d;transition:transform .5s;cursor:pointer}
+.fc.flip{transform:rotateY(180deg)}
+.fc .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;display:grid;place-items:center;padding:24px;text-align:center;font-size:1.25rem;border:1px solid var(--line);background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.fc .back{transform:rotateY(180deg);background:#f3f6ff;font-size:1.05rem}
+.fc .face small{position:absolute;top:10px;right:14px;color:var(--muted);font-size:.8rem}
+/* video */
+video{width:100%;border-radius:14px;background:#000}
+.chapters{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chapters button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+.chapters button:hover{background:#eef1f8}
+.persona{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.persona .card{margin:0}
+.persona h4{margin:.2em 0 .4em;font-size:1.15rem}
+.persona ul{padding-right:18px;margin:0}
+.persona li{margin:3px 0}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 12px}
+.sticky-bar{position:sticky;top:56px;z-index:5;background:var(--bg);padding:8px 0}
+.small{font-size:.88rem;color:var(--muted)}
+.center{text-align:center}
+.formula{font-size:1.4rem;font-weight:700;text-align:center;direction:ltr;margin:8px 0}
+.conv-ladder{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+.conv-ladder .u{background:#fff;border:2px solid var(--t6);border-radius:12px;padding:10px 16px;font-weight:700}
+.conv-ladder .arr{font-size:.85rem;color:var(--muted);text-align:center}
+svg{direction:ltr}
+@media (max-width:600px){body{font-size:16px} .tool svg{flex-basis:56px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🔬 מדעים ז׳: הכנה למבחן</h1>
+  <div class="sub">מבחן ביום ראשון 1.11.26 · מדעי החומר (מט״ח) + הסרט "סופי לעת עתה" + דפי העבודה</div>
+  <div class="progress-wrap"><div class="progress-bar" id="globalProgress"></div></div>
+  <div class="sub" id="globalProgressTxt" style="font-size:.8rem;margin-top:4px"></div>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<!-- ================= HOME ================= -->
+<section class="view" id="view-home">
+  <h2>שלום יונתן! 👋</h2>
+  <div class="card">
+    <p style="margin-top:0">כאן נמצא כל החומר למבחן, מחולק ל-6 נושאים, בדיוק לפי הרשימה של צוות המדעים. בכל נושא יש <b>שיעור קצר</b> ובסופו <b>"בדוק את עצמך"</b>. בסוף מחכים לך <b>3 מבחני תרגול</b> ומבחן אקראי.</p>
+    <div class="box exam"><b class="lbl">📋 מה להביא למבחן</b>מחשבון (להמרת יחידות מידה) וציוד רגיל. המבחן נמשך שיעור אחד.</div>
+  </div>
+
+  <h3>הנושאים למבחן</h3>
+  <div class="topics-grid" id="homeTopics"></div>
+
+  <h3>📅 תוכנית לימוד מומלצת (כ-3 שעות עם הפסקות)</h3>
+  <div class="card">
+    <ol class="plan">
+      <li><b>נושאים 1 ו-2:</b> מבוא למדעים ומדע וטכנולוגיה (30 דק׳). קרא את השיעור ופתור את "בדוק את עצמך".</li>
+      <li><b>נושא 3:</b> הסרט (40 דק׳). אם לא ראית או לא זוכר, צפה בקטעים המסומנים, ואחר כך למד את טבלת פילוסוף / מדען / מהנדס.</li>
+      <li>☕ הפסקה של 10 דקות.</li>
+      <li><b>נושאים 4 ו-5:</b> כלי מעבדה ובטיחות (35 דק׳). את 12 הוראות הבטיחות מהדף של בית הספר צריך לדעת בעל פה!</li>
+      <li><b>נושא 6:</b> נפח והמרות (30 דק׳). כולל <b>מאמן ההמרות</b>: תרגל עד שתצליח 10 ברצף!</li>
+      <li>☕ הפסקה.</li>
+      <li><b>כרטיסיות</b> (15 דק׳): עבור על כל הכרטיסיות עד שאין יותר "לא ידעתי".</li>
+      <li><b>מבחן תרגול 1</b>. בדוק מה טעית, חזור לשיעור הרלוונטי, ואז <b>מבחן 2</b>. מחר בבוקר: <b>מבחן 3</b> כחזרה אחרונה.</li>
+    </ol>
+  </div>
+  <div class="box tip"><b class="lbl">💡 טיפ לשאלות פתוחות</b>כשמבקשים "נמק ותן דוגמאות": 1) כתוב עמדה ברורה. 2) כתוב <b>למה</b> (נימוק). 3) תן <b>שתי דוגמאות</b>, רצוי אחת טובה ואחת רעה. מורים נותנים ניקוד על כל אחד מהחלקים!</div>
+  <p class="small">ההתקדמות נשמרת אוטומטית בדפדפן הזה. <button class="btn ghost" style="padding:3px 10px;font-size:.8rem" onclick="resetProgress()">איפוס התקדמות</button></p>
+</section>
+
+<!-- ================= TOPIC 1 ================= -->
+<section class="view" id="view-t1">
+  <div class="topic-head"><div class="topic-num" style="background:var(--t1)">1</div><h2 style="margin:0">מבוא למדעים: מה זה מדע? תחומי המדע</h2></div>
+
+  <div class="card">
+    <h3 style="margin-top:0">מה זה מדע?</h3>
+    <div class="box key"><b class="lbl">📌 הגדרה</b><b>מדע</b> הוא דרך לחקור ולהבין את העולם: המדענים שואלים שאלות על תופעות בטבע, עורכים <b>תצפיות וניסויים</b>, מודדים ומסיקים מסקנות. בסוף הם מנסחים <b>חוקים, מודלים ותאוריות</b> שמסבירים את התופעות.</div>
+    <p>מאפיינים חשובים של הידע המדעי:</p>
+    <ul>
+      <li><b>מבוסס על ראיות</b>: על ניסויים, תצפיות ומדידות, ולא על דעה או אמונה.</li>
+      <li><b>אפשר לבדוק אותו</b>: מדענים אחרים יכולים לחזור על הניסוי ולקבל אותה תוצאה.</li>
+      <li><b>"סופי לעת עתה"</b>: ידע מדעי נחשב נכון עד שמגיעות ראיות חדשות שמשנות אותו. לדוגמה, פעם חשבו שהארץ היא מרכז היקום, ובעקבות תצפיות ומדידות הבינו שזה לא נכון.</li>
+      <li><b>מתחיל בסקרנות</b>: הרצון להבין איך העולם פועל.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">תחומי המדע</h3>
+    <table>
+      <tr><th>תחום</th><th>במה עוסק</th><th>דוגמה</th></tr>
+      <tr><td><b>כימיה</b> 🧪</td><td>מבנה החומר, הרכב החומרים, התכונות שלהם והשינויים שקורים בהם. גם פיתוח חומרים חדשים.</td><td>פיתוח תרופות, דשנים, פלסטיק, חומרים לבנייה</td></tr>
+      <tr><td><b>פיזיקה</b> ⚡</td><td>השאלות הבסיסיות ביותר על היקום: תנועה, כוחות, אנרגיה, אור, חשמל וקול. מנסחת חוקים שמסבירים תופעות.</td><td>חוק הכבידה (למה גופים נופלים), חוק שימור האנרגיה, ברק ורעם</td></tr>
+      <tr><td><b>ביולוגיה</b> 🌱</td><td>יצורים חיים: בני אדם, בעלי חיים, צמחים וחיידקים</td><td>איך פועל הלב, איך צמח מייצר מזון</td></tr>
+      <tr><td><b>מדעי כדור הארץ</b> 🌍</td><td>סלעים, אדמה, מזג אוויר, אוקיינוסים</td><td>רעידות אדמה, הרי געש, תחזית מזג אוויר</td></tr>
+      <tr><td><b>אסטרונומיה</b> 🔭</td><td>החלל: כוכבים, כוכבי לכת, השמש, הירח והיקום</td><td>תנועת כוכבי הלכת סביב השמש</td></tr>
+    </table>
+    <div class="box key"><b class="lbl">📌 מדעי החומר (שם הספר שלך!)</b>הספר "מדעי החומר" עוסק ב<b>כימיה</b> וב<b>פיזיקה</b>, ובהיבטים <b>טכנולוגיים</b> שלהן. לפי הספר, שני מושגים חיוניים לתיאור היקום הם <b>חומר</b> ו<b>אנרגיה</b>:
+      <ul style="margin:6px 0 0">
+        <li><b>חומרים</b> מרכיבים את העולם הפיזי: גם את הטבע (אדמה, מים, אוויר) וגם את מה שהאדם יצר (בניינים, מכוניות, טלפונים).</li>
+        <li><b>אנרגיה</b> היא הגורם שמניע תהליכים ופעולות, ויש לה כמה צורות: אור, חשמל, תנועה ועוד.</li>
+      </ul>
+    </div>
+    <p>לצד מדעים אלה פועל <b>התחום הטכנולוגי-הנדסי</b>, שעוסק ב<b>יישומים</b> של המדע. לדוגמה: במאה ה-19 גילה המדען <b>היינריך הרץ</b> את הגלים האלקטרומגנטיים, ואחר כך ניצלו את התגלית לפיתוח <b>הרדיו</b> (וגם הטלפון הסלולרי פועל בעזרת הגלים האלה). לפי הספר, שלושת התחומים (כימיה, פיזיקה, טכנולוגיה) קשורים זה בזה.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">שיטת החקר המדעי (מהספר, פרק 1)</h3>
+    <div class="row" style="justify-content:center;gap:6px;font-weight:500">
+      <span class="tag" style="font-size:.95rem">❓ שאלת חקר</span>➜
+      <span class="tag" style="font-size:.95rem">💭 השערה</span>➜
+      <span class="tag" style="font-size:.95rem">🧪 ניסוי</span>➜
+      <span class="tag" style="font-size:.95rem">📊 תוצאות</span>➜
+      <span class="tag" style="font-size:.95rem">✅ מסקנה</span>
+    </div>
+    <ul>
+      <li><b>שאלת חקר</b>: שאלה שהתשובה עליה עוד לא ידועה, ואפשר לענות עליה בניסוי או בתצפית. לרוב היא בודקת קשר בין <b>גורם משפיע</b> (מה שמשנים) ל<b>גורם מושפע</b> (מה שמודדים).</li>
+      <li><b>השערה</b>: תשובה אפשרית לשאלה, שמבוססת על ידע קודם ונותנת הסבר הגיוני. אותה בודקים בניסוי.</li>
+      <li><b>בקרה</b>: ניסוי שנערך באותם תנאים בדיוק, אבל <b>בלי</b> הגורם המשפיע. היא בודקת שהתוצאה באמת נגרמה בגלל הגורם המשפיע.</li>
+      <li><b>חזרות</b>: חוזרים על הניסוי כמה פעמים כדי לוודא שהתוצאות נכונות.</li>
+      <li><b>מסקנה</b>: התשובה לשאלת החקר. האם התוצאות <b>אישרו</b> את ההשערה או <b>הפריכו</b> אותה? אם ההשערה הופרכה, מעלים השערה חדשה ובודקים שוב.</li>
+      <li>מהמסקנות של הרבה ניסויים בונים <b>מודל</b> או <b>תאוריה</b>, ש"הם שיא הפעילות המדעית".</li>
+    </ul>
+    <div class="box tip"><b class="lbl">🧲 הדוגמה מהספר: ניסוי בקפיץ</b>שאלה: מה הקשר בין משקל המשקולת לבין התארכות הקפיץ? <b>גורם משפיע</b>: משקל המשקולת. <b>גורם מושפע</b>: התארכות הקפיץ. כל השאר נשאר קבוע (אותו קפיץ, אותו מתקן). מסקנה: הקפיץ מתארך <b>ביחס ישר</b> למשקל שתלוי עליו.</div>
+  </div>
+  <div class="box exam"><b class="lbl">🎯 מה חשוב למבחן</b>להגדיר מהו מדע · לדעת לפחות 3 תחומי מדע ובמה כל אחד עוסק (במיוחד כימיה ופיזיקה) · להבין שהידע המדעי "סופי לעת עתה".</div>
+  <h3>✍️ בדוק את עצמך</h3>
+  <div id="quiz-t1"></div>
+</section>
+
+<!-- ================= TOPIC 2 ================= -->
+<section class="view" id="view-t2">
+  <div class="topic-head"><div class="topic-num" style="background:var(--t2)">2</div><h2 style="margin:0">מדע וטכנולוגיה</h2></div>
+  <div class="card">
+    <h3 style="margin-top:0">הגדרות</h3>
+    <div class="box key"><b class="lbl">🔬 מדע</b>חקר העולם כדי <b>להבין ולהסביר</b> איך ולמה דברים קורים. התוצר של המדע הוא <b>ידע</b>: חוקים, תאוריות ומודלים.</div>
+    <div class="box key" style="border-color:var(--t2)"><b class="lbl">⚙️ טכנולוגיה</b>שימוש בידע (מדעי, וגם ידע מעשי) כדי <b>לפתור בעיות ולספק צרכים</b> של בני אדם. התוצר של הטכנולוגיה הוא <b>מוצרים, מכשירים, כלים ותהליכים</b>. מי שעוסקים בטכנולוגיה הם המהנדסים והטכנולוגים.</div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">📊 טבלת השוואה: חשוב מאוד!</h3>
+    <table>
+      <tr><th style="width:22%"></th><th>מדע 🔬</th><th>טכנולוגיה ⚙️</th></tr>
+      <tr><td><b>מטרה</b></td><td>להבין ולהסביר את העולם ("לדעת כדי לדעת")</td><td>לפתור בעיות, לשפר את חיי האדם ולהפיק תועלת</td></tr>
+      <tr><td><b>השאלה שנשאלת</b></td><td>"איך זה פועל? למה זה קורה? <b>אם אעשה כך וכך, מה יקרה?</b>"</td><td>"<b>קרה כך וכך, מה אפשר לעשות עם זה?</b> איזו תועלת אפשר להפיק? איך פותרים את הבעיה?"</td></tr>
+      <tr><td><b>דרך העבודה</b></td><td>שאלה, השערה, ניסוי, מדידה, מסקנה</td><td>הגדרת צורך או בעיה, תכנון, בנייה, ניסוי ושיפור</td></tr>
+      <tr><td><b>התוצר</b></td><td>ידע: חוק, תאוריה, מודל, תגלית</td><td>מוצר, מכשיר, כלי, מערכת, תהליך ייצור</td></tr>
+      <tr><td><b>מי עוסק</b></td><td>מדען (פיזיקאי, כימאי, ביולוג)</td><td>מהנדס, טכנולוג, איש מקצוע</td></tr>
+      <tr><td><b>דוגמה</b></td><td>הרץ גילה את הגלים האלקטרומגנטיים · גלילאו גילה את חוק הנפילה החופשית</td><td>פיתוח הרדיו והטלפון הסלולרי · בניית משאבת ריק</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">🔄 הקשר בין מדע לטכנולוגיה: הם עוזרים זה לזה</h3>
+    <div class="grid">
+      <div class="box tip" style="margin:0"><b class="lbl">מדע ➜ טכנולוגיה</b>תגליות מדעיות מאפשרות לפתח טכנולוגיות חדשות.<br>• גלים אלקטרומגנטיים (הרץ) ➜ רדיו, טלפון סלולרי<br>• חוקי התנועה של ניוטון ➜ שיגור לוויינים<br>• מחקר האטום ➜ מכשירים לגילוי סרטן מוקדם</div>
+      <div class="box tip" style="margin:0"><b class="lbl">טכנולוגיה ➜ מדע</b>הטכנולוגיה נותנת למדענים כלים ומכשירים למחקר.<br>• משאבת ריק ➜ הוכחה שבריק נוצה ומטבע נופלים יחד<br>• טלסקופ ➜ תגליות בחלל (גלילאו גילה ירחים של צדק)<br>• מיקרוסקופ ➜ גילוי תאים וחיידקים<br>• מאיץ חלקיקים ➜ חקר מבנה האטום</div>
+    </div>
+    <div class="box key"><b class="lbl">📌 המסקנה</b>מדע וטכנולוגיה צריכים <b>שיתוף פעולה</b>. בלי טכנולוגיה המדענים לא יכולים לבדוק את התאוריות שלהם (ניוטון חזה לוויין, אבל רק מהנדסים יכלו לשגר אותו). ובלי מדע, ההתקדמות הטכנולוגית הייתה איטית מאוד ("יעברו מאות שנים בין חידוש לחידוש").</div>
+    <div class="box mistake"><b class="lbl">⚠️ שים לב</b>טכנולוגיה <b>יכולה להתקיים גם בלי הבנה מדעית!</b> הנפח בקפריסין לפני כ-3,500 שנה ידע לייצר ברונזה, אבל לא הבין למה היא חזקה (הוא חשב שזה בזכות התפילות). טכנולוגיה עתיקה (כלי אבן, גלגל, ברונזה) קדמה למדע המודרני.</div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">🚀 התפתחויות טכנולוגיות לאורך ההיסטוריה</h3>
+    <table>
+      <tr><th>תקופה</th><th>דוגמאות</th></tr>
+      <tr><td>העת העתיקה</td><td>כלי אבן, אש, הגלגל, הכתב, ברונזה (סגסוגת של נחושת ובדיל) וכלי ברזל</td></tr>
+      <tr><td>מהמאה ה-15 עד המאה ה-19</td><td>הדפוס, הטלסקופ והמיקרוסקופ, מנוע הקיטור, הרכבת, החשמל והנורה, הטלפון, הרדיו</td></tr>
+      <tr><td>המאה ה-20</td><td>מכונית ומטוס, טלוויזיה, אנטיביוטיקה וחיסונים, מחשב, לוויינים, פלסטיק</td></tr>
+      <tr><td>היום</td><td>אינטרנט, טלפון חכם, GPS, בינה מלאכותית, רכב חשמלי, הדפסה בתלת-ממד, רובוטים רפואיים</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">⚖️ האם טכנולוגיה זה טוב או רע? (שאלה פתוחה, צריך נימוק ודוגמאות)</h3>
+    <div class="grid">
+      <div class="box tip" style="margin:0"><b class="lbl">👍 יתרונות</b>• <b>רפואה</b>: תרופות, חיסונים ומכשירי הדמיה מאריכים חיים<br>• <b>תקשורת</b>: טלפון ואינטרנט מקרבים אנשים<br>• <b>תחבורה</b>: מגיעים רחוק ומהר<br>• <b>מזון</b>: דשנים ומכונות חקלאיות מאכילים מיליארדי אנשים<br>• <b>נוחות</b>: מקרר, מזגן, מכונת כביסה</div>
+      <div class="box mistake" style="margin:0"><b class="lbl">👎 חסרונות</b>• <b>זיהום</b> אוויר ומים, פסולת פלסטיק, התחממות כדור הארץ<br>• <b>נשק</b> והרס במלחמות<br>• <b>התמכרות</b> למסכים ופחות פעילות גופנית<br>• פגיעה ב<b>פרטיות</b><br>• מכונות שמחליפות עובדים</div>
+    </div>
+    <div class="box exam"><b class="lbl">✍️ תשובה לדוגמה (ככה כותבים במבחן)</b>"הטכנולוגיה <b>אינה טובה ואינה רעה בעצמה</b>. הכול תלוי באופן שבו <b>בני האדם משתמשים בה</b>. לדוגמה, <b>הטלפון הסלולרי</b> מאפשר להזעיק עזרה במצב חירום ולשמור על קשר עם המשפחה, וזה טוב. אבל אותו טלפון יכול לגרום להתמכרות ולפגיעה בפרטיות, וזה רע. דוגמה נוספת: <b>מכונית</b> מאפשרת להגיע מהר לבית חולים, אבל גם מזהמת את האוויר וגורמת לתאונות. לכן האחריות היא שלנו: להשתמש בטכנולוגיה בצורה נבונה."</div>
+  </div>
+  <h3>✍️ בדוק את עצמך</h3>
+  <div id="quiz-t2"></div>
+</section>
+
+<!-- ================= TOPIC 3 ================= -->
+<section class="view" id="view-t3">
+  <div class="topic-head"><div class="topic-num" style="background:var(--t3)">3</div><h2 style="margin:0">הסרט "סופי לעת עתה": פילוסופים, מדענים ומהנדסים</h2></div>
+  <div class="card">
+    <video id="sofiVideo" controls preload="metadata" src="video/sofi.mp4"></video>
+    <div class="small" style="margin-top:6px">לחץ על כפתור כדי לקפוץ לקטע בסרט:</div>
+    <div class="chapters" id="chapters"></div>
+    <p class="small">הסרט: "סופי לעת עתה" מתוך הסדרה של כאן חינוכית (פרק 1). ברשימת החומר למבחן הוא מופיע בשם "סופי בהחלט", על שם המשפט שאריסטו אומר כשהוא עוזב: "וזה סופי בהחלט".</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">🎬 על מה הסרט?</h3>
+    <p>בסרט נפגשות דמויות מתקופות שונות ומתווכחות: <b>אריסטו</b> (פילוסוף יווני, לפני כ-2,400 שנה), <b>גלילאו גליליי</b> (מדען איטלקי, לפני כ-400 שנה), <b>אייזק ניוטון</b> (מדען אנגלי), <b>פרופ׳ ריצ׳רד קליינמן</b> (מדען בן זמננו שחקר את מבנה האטום), <b>שירלי</b> (מהנדסת), ו<b>נפח</b> שמייצר ברונזה בקפריסין לפני כ-3,500 שנה.</p>
+    <div class="box key"><b class="lbl">📌 הרעיון המרכזי: "סופי לעת עתה"</b>אריסטו טען שהארץ היא מרכז היקום, וזה נחשב ל"אמת הסופית" במשך כ-2,000 שנה. אחר כך גלילאו הראה שהשמש במרכז, ואחר כך ניוטון הראה שגם השמש אינה מרכז היקום.<br>➜ במדע אין "אמת אחת וסופית". הידע המדעי כולל דברים ב<b>דרגות ודאות שונות</b>, ו<b>אף אחד מהם אינו ודאי לחלוטין</b>. הידע הוא <b>"סופי לעת עתה"</b>, עד שמגיעות ראיות חדשות.<br>➜ <b>הספקנות היא כוחו של המדע</b>: אפשר לשים סימן שאלה על כל דבר, "ולא חשוב מי אמר זאת". שום דבר במדע אינו "קדוש".</div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">👥 שלוש הדמויות: מאפיינים ודרך עבודה (הכי חשוב!)</h3>
+    <div class="persona">
+      <div class="card" style="border-top:5px solid #7048e8">
+        <h4>🏛️ הפילוסוף (אריסטו)</h4>
+        <ul>
+          <li><b>חושב ומסיק בעזרת היגיון בלבד</b>: מתחיל מ"הנחת יסוד" שקובעת איך דברים <b>צריכים</b> לקרות.</li>
+          <li><b>לא עורך ניסויים</b>. לפי שיטתו אין בהם צורך, כי "ההיגיון לבדו הוא הקובע".</li>
+          <li><b>מחפש את "האמת האחת, הנצחית והסופית"</b>.</li>
+          <li>עוסק ברעיונות ובמושגים <b>כלליים</b> ולא מודד: "עופרת כבדה, עץ קל", בלי לשאול בכמה.</li>
+          <li>מזלזל בעבודת כפיים ורואה בה "<b>מלאכת עבדים</b>".</li>
+          <li>שואל שאלות כמו "איך העולם בנוי ולשם מה?" ובונה "מערכת תשובות המבוססת על ההיגיון".</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:5px solid #1c7ed6">
+        <h4>🔬 המדען (גלילאו, ניוטון, קליינמן)</h4>
+        <ul>
+          <li>שואל שאלה <b>שהוא לא יודע את התשובה עליה</b>, ומעלה <b>השערה</b>.</li>
+          <li><b>בודק את ההשערה בניסוי</b>: "הנחות צריך לבדוק".</li>
+          <li>מקפיד על <b>מדידה מדויקת</b> ושואל "<b>בכמה?</b>" (בכמה העופרת כבדה מהעץ?). לכן הוא צריך מכשירי מדידה אמינים.</li>
+          <li><b>ספקן</b>: גם כשהוא בטוח, הוא יודע שזה לא סופי. אם הניסוי מפריך את ההשערה, הוא <b>מתחיל מחדש</b>.</li>
+          <li>"<b>פותר חידות</b>": שואל "<b>איך זה פועל?</b>" ולא "בשביל מה זה טוב?". מונע מ<b>סקרנות</b> ("לדעת על מנת לדעת").</li>
+          <li>שואל: "<b>אם אעשה כך וכך, מה יקרה?</b>"</li>
+          <li>ההבנה שלו מובילה לפעמים לשימוש מעשי (מסלול הפגז, הלוויין).</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:5px solid #0ca678">
+        <h4>⚙️ המהנדס / הטכנולוג (שירלי, הנפח)</h4>
+        <ul>
+          <li><b>איש מעשה</b>: יודע <b>איך לעשות</b>, ומייצר כלים, מכשירים ומוצרים.</li>
+          <li><b>פותר בעיות מעשיות</b> של חיי היומיום וממציא שיטות ומנגנונים חדשים.</li>
+          <li><b>מיישם</b> ידע: את מה שלמד, ואת מה שהמדענים גילו.</li>
+          <li>שואל: "<b>קרה כך וכך, מה אני יכול לעשות עם זה? איזו תועלת אפשר להפיק?</b>"</li>
+          <li>בונה למדענים את <b>הכלים</b> לבדיקת התאוריות: משאבת ריק, מכשירי מדידה, טילים ולוויינים.</li>
+          <li>לפעמים יודע לעשות <b>בלי להבין למה</b> (הנפח והברונזה).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box exam" style="margin-top:14px"><b class="lbl">🎯 המשפט לזכור (קליינמן)</b>"<b>המדענים פותרים חידות</b>, ו<b>המהנדסים מנצלים את הידע הזה</b> כדי לעשות לנו את החיים יותר קלים." מי חשוב יותר? זו שאלה כמו "מה קדם למה, הביצה או התרנגולת". הם צריכים <b>שיתוף פעולה מלא</b>.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">🧪 הסיפורים והניסויים בסרט</h3>
+    <h4>1. ⚒️ הנפח והברונזה: "לדעת" לעומת "להבין"</h4>
+    <p>בקפריסין, לפני כ-3,500 שנה: מתיכים <b>נחושת</b> (מתכת רכה), ועל כל <b>9 מנות נחושת</b> מוסיפים <b>מנה אחת של בדיל</b> (גם הוא מתכת רכה). מקבלים <b>ברונזה</b>, <b>סגסוגת</b> קשה וחזקה יותר מהנחושת ומהבדיל. הנפח חשב שהתפילות והקורבנות לאלים הם מה שגורם לברונזה להצליח, והסוד עבר מאב לבן.<br>➜ הנפח <b>יודע איך</b> לעשות, אבל <b>לא מבין למה</b>. היום אנחנו יודעים שהחומר בנוי מחלקיקים זעירים (<b>אטומים</b>), ולכן אפשר להסביר את התכונות של הברונזה.<br>➜ שירלי המהנדסת: "זה לא משנה אם הנפח מבין". חרשים ייצרו ברונזה במשך אלפי שנים, וזה הספיק.</p>
+
+    <h4>2. 🪶 האבן והנוצה: נפילה חופשית</h4>
+    <table>
+      <tr><th>אריסטו (היגיון)</th><th>גלילאו (ניסוי)</th></tr>
+      <tr><td>גוף כבד "רוצה" להגיע לאדמה מהר יותר, ולכן <b>האבן תגיע ראשונה, "בלי כל ספק"</b>. וחוץ מזה, "אין ולא יכול להיות ריק".</td><td><b>משקל</b> הגוף לא קובע את מהירות הנפילה. מה שקובע הוא <b>החיכוך עם האוויר</b> (התנגדות האוויר). <b>בריק</b> (בלי אוויר) <b>כל הגופים נופלים באותה מהירות</b>.</td></tr>
+    </table>
+    <p><b>הניסוי של גלילאו:</b> שני כדורים באותו גודל, אחד מ<b>עופרת</b> ואחד מ<b>עץ</b>. העופרת כבדה פי 10. לפי אריסטו העופרת הייתה צריכה ליפול מהר פי 10, אבל בניסוי היא הגיעה רק <b>קצת לפני</b> כדור העץ. ההפרש הקטן נובע מחיכוך האוויר.</p>
+    <p><b>ההוכחה:</b></p>
+    <ul>
+      <li>🌙 <b>על הירח</b>, שאין בו אוויר, אסטרונאוט הפיל <b>פטיש ונוצה</b> באותו רגע, והם <b>נחתו יחד</b>. גלילאו צדק! (הניסוי נעשה במשימת אפולו 15, ב-1971.)</li>
+      <li>🫙 <b>משאבת ריק</b>: מכניסים מטבע ונוצה לצינור זכוכית. עם אוויר בצינור, המטבע נופל מהר יותר. אחרי שמרוקנים את האוויר, <b>הם נופלים באותה מהירות</b>.</li>
+      <li>➜ "גלילאו המדען הניח שבריק הם יגיעו יחד, אבל לא ידע ליצור ריק. <b>המהנדסים יצרו ריק וחסכו 300 שנים</b>." זו דוגמה מצוינת לשיתוף פעולה בין מדע לטכנולוגיה!</li>
+    </ul>
+
+    <h4>3. ⚪ הכדור על המישור המשופע: האם תנועה צריכה כוח?</h4>
+    <p><b>אריסטו טען:</b> המצב הטבעי של כל גוף הוא <b>מנוחה</b>, וכדי שגוף ימשיך לנוע צריך להפעיל עליו <b>כוח</b>.<br>
+    <b>גלילאו (ניסוי מחשבתי):</b> כדור שמתגלגל במורד, בלי חיכוך, עולה בצד השני <b>לאותו גובה</b> שממנו התחיל. אם השיפוע בצד השני מתון יותר, הכדור עובר דרך ארוכה יותר. ואם במקום שיפוע יש <b>מישור אופקי אינסופי</b> (בריק, בלי חיכוך), הכדור ימשיך להתגלגל <b>באותה מהירות, בקו ישר, עד אינסוף</b>.<br>➜ <b>אריסטו טעה</b>: גוף יכול להמשיך לנוע גם בלי שפועל עליו כוח, אם אין חיכוך.<br>➜ למה אריסטו לא עשה ניסוי? כי לפי השקפת עולמו אין צורך בניסויים, "ההיגיון לבדו קובע".</p>
+
+    <h4>4. 💣 הפגז והלוויין: מהבנה לשימוש</h4>
+    <ul>
+      <li>מהניסויים שלו גילה גלילאו ש<b>פגז</b> לא נופל בזווית ישרה, אלא עף <b>במסלול בצורת קשת</b>. התגלית <b>עזרה לתותחנים</b>.</li>
+      <li><b>ניוטון</b> המשיך את רעיונות גלילאו ובנה מודל: ככל שהפגז מהיר יותר, הוא נופל רחוק יותר. במהירות מספיק גבוהה הוא <b>לא ייפול בכלל</b> ויקיף את כדור הארץ, ובמהירות גבוהה עוד יותר הוא יעזוב אותו. כך <b>ניבא ניוטון את הלוויין</b>, מאות שנים לפני ששוגר.</li>
+      <li>אבל בלי <b>אנשי הטכנולוגיה</b> שפיתחו את הכלים, המכשירים והדלק, ניוטון לא יכול היה לבדוק את התאוריה שלו.</li>
+      <li>מהידע על שיגור לוויינים נוצרו <b>מחשבים, טלוויזיה בכבלים ובלוויין, טלפונים סלולריים</b>. הממשלות חשבו בהתחלה על לוויינים רק כאמצעי מלחמה!</li>
+      <li><b>מאיץ החלקיקים</b> נבנה כדי לחקור את מבנה האטום, ובעקבות המחקר פותחו מכשירים <b>לגילוי מוקדם של סרטן</b>, אף שאף אחד לא תכנן את זה מראש.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">⚖️ האם המדע טוב או רע?</h3>
+    <div class="box key"><b class="lbl">📌 התשובה בסרט (קליינמן)</b>"<b>המדע אינו טוב ואינו רע.</b> מה שבני אדם עושים בעזרת הידע המדעי יכול להיחשב לטוב או לרע. <b>המדע הוא מכשיר</b> שאפשר לעשות בו הכול." השאלה היא <b>שאלה מוסרית</b>, ו"מוסר יש רק לבני אדם. <b>הכול תלוי בנו</b>."</div>
+    <p><b>דוגמאות:</b></p>
+    <ul>
+      <li>🧬 <b>גנטיקה</b> (הדוגמה מהסרט): בעזרת טכניקות חדשות לומדים לרפא מחלות חשוכות מרפא (טוב). אבל באותן טכניקות אפשר אולי ליצור בעתיד בני אדם עם תכונות הרסניות (רע).</li>
+      <li>🛰️ <b>לוויינים</b>: תוכננו כאמצעי מלחמה (רע), והביאו תקשורת, טלוויזיה, GPS וטלפונים סלולריים (טוב).</li>
+      <li>⚛️ <b>מחקר האטום</b>: הוביל לגילוי מוקדם של סרטן ולהפקת חשמל (טוב), וגם לפצצה האטומית (רע).</li>
+    </ul>
+    <div class="box exam"><b class="lbl">✍️ תשובה לדוגמה למבחן</b>"לדעתי <b>המדע עצמו אינו טוב ואינו רע</b>. הוא כלי, ידע, והשאלה היא <b>מה בני האדם בוחרים לעשות איתו</b>. זו שאלה מוסרית. לדוגמה, הידע בגנטיקה מאפשר לרפא מחלות קשות, וזה טוב. אבל אפשר להשתמש באותו ידע כדי ליצור משהו מסוכן, וזה רע. גם מחקר האטום הוביל גם למכשירים שמגלים סרטן מוקדם וגם לפצצה אטומית. לכן הכול תלוי בנו."</div>
+  </div>
+  <h3>✍️ בדוק את עצמך</h3>
+  <div id="quiz-t3"></div>
+</section>
+
+<!-- ================= TOPIC 4 ================= -->
+<section class="view" id="view-t4">
+  <div class="topic-head"><div class="topic-num" style="background:var(--t4)">4</div><h2 style="margin:0">כלי מעבדה</h2></div>
+  <div class="box mistake"><b class="lbl">📄 חשוב</b>הנושא הזה מבוסס על <b>דף פעילות</b> שקיבלתם בכיתה. כאן מופיעים כלי המעבדה המקובלים בכיתה ז׳. <b>השווה לדף שלך</b>: אם יש בו כלי שלא מופיע כאן, למד גם אותו באותה שיטה (תפקיד, חומר, למה נבחר החומר, איך הצורה מתאימה).</div>
+  <div class="card">
+    <h3 style="margin-top:0">🧱 מאיזה חומר עשויים הכלים, ולמה?</h3>
+    <p>במבחן ישאלו: <b>"מאיזה חומר הכלי עשוי ומדוע נבחר חומר זה?"</b> התשובה תמיד קשורה ל<b>תכונות</b> החומר:</p>
+    <table>
+      <tr><th>חומר</th><th>תכונות (למה בוחרים בו)</th><th>חיסרון</th></tr>
+      <tr><td><span class="tag glass">זכוכית</span></td><td><b>שקופה</b> (רואים מה קורה בפנים) · <b>עמידה בחום</b> (זכוכית מעבדה מיוחדת, "פיירקס") · <b>לא מגיבה</b> עם רוב החומרים · <b>קלה לניקוי</b></td><td>שבירה</td></tr>
+      <tr><td><span class="tag plastic">פלסטיק</span></td><td><b>לא נשבר</b> · <b>קל</b> · <b>זול</b> · יכול להיות גמיש (בקבוק שטיפה) · יש פלסטיק שקוף</td><td>לא עמיד בחום (נמס או מתעוות)</td></tr>
+      <tr><td><span class="tag rubber">גומי</span></td><td><b>גמיש ואלסטי</b> (אפשר ללחוץ והוא חוזר לצורתו) · <b>אוטם</b> (לא נותן לנוזל או לגז לצאת)</td><td>לא עמיד בחום גבוה</td></tr>
+      <tr><td><span class="tag metal">מתכת</span></td><td><b>חזקה ויציבה</b> · <b>עמידה בחום גבוה</b> ולא נשרפת</td><td><b>מוליכה חום</b>, כלומר מתחממת ואפשר להיכוות</td></tr>
+      <tr><td><span class="tag wood">עץ</span></td><td><b>מוליך חום גרוע (מבודד)</b>, ולכן לא מתחמם ולא שורף את היד</td><td>יכול להישרף באש ישירה</td></tr>
+      <tr><td><span class="tag porcelain">חרסינה</span></td><td>עמידה ב<b>טמפרטורות גבוהות מאוד</b> · לא מגיבה עם חומרים</td><td>שבירה</td></tr>
+    </table>
+  </div>
+  <h3>🔍 הכלים: תפקיד, חומר והתאמה לתפקיד</h3>
+  <div class="grid" id="toolsGrid"></div>
+  <div class="box exam" style="margin-top:16px"><b class="lbl">✍️ תשובה לדוגמה: "כיצד מותאם הכלי לתפקידו?"</b><b>משורה</b>: תפקידה למדוד נפח של נוזל בדיוק. היא <b>גבוהה וצרה</b>, ולכן גם שינוי קטן בנפח מזיז את גובה הנוזל באופן שרואים, והשנתות צפופות ומדויקות. יש לה <b>בסיס רחב</b> כדי שלא תיפול, ו<b>פייה</b> לשפיכה. היא עשויה <b>זכוכית</b> (שקופה, אפשר לראות את פני הנוזל, ולא מגיבה עם החומרים) או <b>פלסטיק</b> (לא נשבר).</div>
+  <h3>✍️ בדוק את עצמך</h3>
+  <div id="quiz-t4"></div>
+</section>
+
+<!-- ================= TOPIC 5 ================= -->
+<section class="view" id="view-t5">
+  <div class="topic-head"><div class="topic-num" style="background:var(--t5)">5</div><h2 style="margin:0">הוראות בטיחות במעבדה</h2></div>
+  <div class="box mistake"><b class="lbl">📄 זה הדף מהכיתה!</b>אלה <b>12 הוראות הבטיחות</b> מהעמוד הראשון בדפי העבודה של עתידים (צוות המדעים בחטיבה). צריך לדעת את <b>כולן</b>, וגם <b>להסביר למה</b> כל הוראה חשובה.</div>
+  <div class="box key"><b class="lbl">🎯 המטרה של כללי הבטיחות</b>"כללי הבטיחות מטרתם <b>למנוע מקרי אסון ותאונות</b>."</div>
+  <h3>📋 12 הוראות הבטיחות (מהדף של בית הספר)</h3>
+  <div class="card">
+  <table>
+    <tr><th style="width:36px">#</th><th>ההוראה</th><th style="width:34%">למה? (ההסבר)</th></tr>
+    <tr><td>1</td><td>לוקחים <b>ציוד</b> רק <b>אחרי הסבר המורה</b>, אחרי שהבנו מה צריך לעשות בניסוי, ו<b>אחרי שקיבלנו רשות</b> מהמורה.</td><td>כדי לא להשתמש בכלי או בחומר בצורה לא נכונה ומסוכנת.</td></tr>
+    <tr><td>2</td><td>כשמחממים חומרים או כלים, מחזיקים אותם עם <b>מאחז מתאים</b> העשוי מ<b>חומר שמוליך חום גרוע</b> (למשל עץ).</td><td>הכלי מתחמם מאוד. מאחז שלא מעביר חום מגן על היד מכוויות.</td></tr>
+    <tr><td>3</td><td>כשמרתיחים חומר במבחנה, <b>מפנים את פי המבחנה</b> כך שהחומר <b>לא יותז</b> לכיוון התלמיד או לכיוון השכנים.</td><td>נוזל רותח יכול לקפוץ מהמבחנה ולגרום לכוויות, גם בעיניים.</td></tr>
+    <tr><td>4</td><td><b>אסור להריח</b> חומרים, <b>אלא אם קיבלנו הוראה מפורשת</b>. גם אז מריחים <b>מרחוק</b>, ו<b>אסור לשאוף חזק</b>.</td><td>אדים של חומרים יכולים להזיק לאף, לגרון ולריאות.</td></tr>
+    <tr><td>5</td><td><b>אסור לטעום</b> חומרים במעבדה.</td><td>הרבה חומרים רעילים נראים בדיוק כמו סוכר או מלח.</td></tr>
+    <tr><td>6</td><td>את ה<b>כוהליה</b> (או מבער הגז) מדליקים <b>רק המורה או הלבורנטית</b>. <b>מכבים</b> את הכוהליה <b>מיד בסוף החימום</b> ולא משאירים אותה בוערת בלי צורך. <b>תלמיד/ה עם שיער ארוך אוספים את השיער</b> לפני השימוש בכוהליה.</td><td>אש היא הסכנה הגדולה במעבדה. שיער פזור יכול להישרף.</td></tr>
+    <tr><td>7</td><td>כל הניסויים נעשים <b>בתוך מגש העבודה</b>, ולא מוציאים חפצים מהמגש לשולחן. <b>כלים וחומרים חמים</b> מניחים על <b>מגש מתכת</b>.</td><td>אם משהו נשפך, הוא נשאר במגש. מגש מתכת לא נשרף ולא נמס מחום.</td></tr>
+    <tr><td>8</td><td><b>לא נוגעים בחומרים כימיים בידיים</b>, רק בעזרת כלים: <b>מרית, כפית, מלקטת, מלקחיים</b>.</td><td>חומרים יכולים לצרוב או לגרות את העור, ולעבור לפה או לעיניים.</td></tr>
+    <tr><td>9</td><td><b>לא מערבבים חומרים שונים</b>, אלא אם קיבלנו הוראה מפורשת.</td><td>ערבוב יכול לגרום לתגובה מסוכנת: חום, גז או התזה.</td></tr>
+    <tr><td>10</td><td>ניסויים שמסומנים כ<b>"ניסויי הדגמה"</b> מבצעים <b>רק המורה או הלבורנטית</b>.</td><td>אלה ניסויים מסוכנים מדי בשביל תלמידים.</td></tr>
+    <tr><td>11</td><td>כלי זכוכית ש<b>התנפצו</b> אוספים <b>עם מטאטא ויעה</b> (לא בידיים).</td><td>שברי זכוכית חותכים את הידיים.</td></tr>
+    <tr><td>12</td><td><b>אסור להיכנס לחדר ההכנה</b> בלי אישור מהמורה. לפני שנכנסים, <b>שואלים את הלבורנטית</b> אם אפשר. <b>בהפסקות לא נכנסים</b> לחדר ההכנה.</td><td>בחדר ההכנה שמורים חומרים וכלים מסוכנים.</td></tr>
+  </table>
+  </div>
+  <div class="box tip"><b class="lbl">🧠 טריק לזכירה: 5 קבוצות</b>
+    <b>👩‍🏫 רק עם אישור:</b> לוקחים ציוד (1) · מריחים (4) · מערבבים (9) · נכנסים לחדר ההכנה (12).<br>
+    <b>👩‍🔬 רק המורה או הלבורנטית:</b> מדליקים כוהליה (6) · ניסויי הדגמה (10).<br>
+    <b>🔥 חום:</b> מאחז שמוליך חום גרוע (2) · פי המבחנה הרחק מאנשים (3) · מכבים כוהליה מיד ואוספים שיער (6) · חם ➜ מגש מתכת (7).<br>
+    <b>🚫 לא בגוף:</b> לא טועמים (5) · לא נוגעים בידיים, רק מרית, כפית, מלקטת, מלקחיים (8).<br>
+    <b>🧹 סדר וניקיון:</b> עובדים בתוך המגש (7) · זכוכית שבורה ➜ מטאטא ויעה (11).
+  </div>
+  <div class="box exam"><b class="lbl">🎯 שאלה נפוצה במבחן: "מצא את הטעויות"</b>"דנה הדליקה בעצמה את הכוהליה, החזיקה ביד את המבחנה עם המים, וכשהמים רתחו הפנתה את פי המבחנה לכיוון חברתה. בסוף השאירה את הכוהליה דולקת." הטעויות: 1) רק <b>המורה או הלבורנטית</b> מדליקים כוהליה (הוראה 6). 2) מחזיקים מבחנה חמה עם <b>מאחז</b> שמוליך חום גרוע, לא ביד (הוראה 2). 3) <b>פי המבחנה</b> צריך להיות מופנה הרחק מאנשים (הוראה 3). 4) מכבים את הכוהליה <b>מיד בסוף החימום</b> (הוראה 6).</div>
+  <div class="card"><h4 style="margin-top:0">➕ כללים כלליים נוספים (לא מופיעים בדף, אבל טוב לדעת)</h4><ul>
+    <li><b>לא אוכלים ולא שותים</b> במעבדה. מתנהגים ברצינות: לא רצים ולא דוחפים.</li>
+    <li>מרכיבים <b>משקפי מגן</b> כשצריך.</li>
+    <li>חומר נכנס לעין או נשפך על העור? <b>שוטפים מיד בהרבה מים</b> ו<b>מדווחים למורה</b>. על כל תקלה מדווחים מיד.</li>
+    <li>בסיום מנקים את הכלים ו<b>שוטפים ידיים</b>.</li>
+  </ul></div>
+  <h3>✍️ בדוק את עצמך</h3>
+  <div id="quiz-t5"></div>
+</section>
+
+<!-- ================= TOPIC 6 ================= -->
+<section class="view" id="view-t6">
+  <div class="topic-head"><div class="topic-num" style="background:var(--t6)">6</div><h2 style="margin:0">נפח: הגדרה, מדידה ויחידות</h2></div>
+  <div class="card">
+    <div class="box key" style="margin-top:0"><b class="lbl">📌 הגדרה (מהספר, עמ׳ 57)</b><b>נפח</b> הוא <b>המקום שהגוף תופס במרחב</b>.<br>לדוגמה: נפח התפוזים בארגז הוא המקום שהתפוזים תופסים בו, ונפח המים בכוס הוא המקום שהמים תופסים בכוס.</div>
+    <p>לכל גוף יש <b>צורה, מסה ונפח</b>: למוצק (קובייה, אבן), לנוזל (מים בבקבוק) וגם לגז (האוויר בבלון).</p>
+    <div class="box key"><b class="lbl">📌 יחידת המידה הבסיסית</b>לפי הספר, יחידת המידה הבסיסית למדידת נפח היא <b>סמ״ק</b> (סנטימטר מעוקב): הנפח של קובייה שהאורך, הרוחב והגובה שלה הם 1 ס״מ כל אחד. כשמודדים נפח של גוף גדול יותר, בודקים בעצם <b>כמה קוביות של 1 סמ״ק נכנסות בו</b>.</div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">📏 יחידות מידה של נפח</h3>
+    <table>
+      <tr><th>יחידה</th><th>קיצור</th><th>מתי משתמשים (לפי הספר)</th></tr>
+      <tr><td>מיליליטר / סנטימטר מעוקב</td><td>מ״ל / סמ״ק</td><td><b>נפחים קטנים</b>: חלב לתינוק, תרופה, תרופה במזרק</td></tr>
+      <tr><td>ליטר</td><td>ל׳</td><td><b>גופים גדולים יותר</b>: קרטון חלב, בקבוקי שתייה קלה</td></tr>
+      <tr><td>מטר מעוקב ("קוב")</td><td>מ״ק</td><td><b>גופים גדולים מאוד</b>: בריכה, מכלית, אונייה. גם צריכת המים בחשבון המים נמדדת במ״ק</td></tr>
+    </table>
+    <p class="small">ההיגיון: בוחרים יחידה שהמספר יצא בה נוח. לא נכתוב שבבריכה יש 50,000,000 מ״ל, אלא 50 מ״ק.</p>
+    <h3>🔁 ההמרות: חובה לדעת בעל-פה!</h3>
+    <div class="formula">1 ליטר = 1,000 מ״ל</div>
+    <div class="formula">1 מ״ל = 1 סמ״ק</div>
+    <div class="formula">⬅️ ולכן: 1 ליטר = 1,000 סמ״ק</div>
+    <div class="formula">1 מ״ק = 1,000 ליטר</div><div class="small center">(כל ההמרות האלה מופיעות בספר בעמ׳ 58)</div>
+    <div class="conv-ladder">
+      <div class="u">ליטר</div>
+      <div class="arr">× 1000 ⬅️<br>➡️ ÷ 1000</div>
+      <div class="u">מ״ל = סמ״ק</div>
+    </div>
+    <div class="box tip"><b class="lbl">🧠 איך לזכור לאן להכפיל?</b><b>מיחידה גדולה לקטנה ➜ כופלים ב-1000</b> (המספר גדל): 2 ל׳ = 2 × 1000 = <b>2000 מ״ל</b>.<br><b>מיחידה קטנה לגדולה ➜ מחלקים ב-1000</b> (המספר קטן): 500 מ״ל = 500 ÷ 1000 = <b>0.5 ל׳</b>.<br>בדיקת היגיון: ליטר אחד "מכיל" הרבה מיליליטרים, ולכן מספר המיליליטרים צריך להיות גדול יותר.</div>
+    <table>
+      <tr><th>ליטר</th><th>מ״ל</th><th>סמ״ק</th></tr>
+      <tr><td>1</td><td>1,000</td><td>1,000</td></tr>
+      <tr><td>2.5</td><td>2,500</td><td>2,500</td></tr>
+      <tr><td>1.5</td><td>1,500</td><td>1,500</td></tr>
+      <tr><td>0.5 (חצי ליטר)</td><td>500</td><td>500</td></tr>
+      <tr><td>0.25 (רבע ליטר)</td><td>250</td><td>250</td></tr>
+      <tr><td>0.33</td><td>330</td><td>330</td></tr>
+      <tr><td>0.05</td><td>50</td><td>50</td></tr>
+      <tr><td>0.001</td><td>1</td><td>1</td></tr>
+    </table>
+    <div class="box mistake"><b class="lbl">⚠️ טעויות נפוצות</b>• לכפול כשצריך לחלק (או הפוך). תמיד עשה בדיקת היגיון!<br>• לשכוח לכתוב <b>יחידות</b> בתשובה.<br>• לחשוב ש-1 מ״ל שונה מ-1 סמ״ק. הם <b>שווים</b>!<br>• 0.05 ל׳ זה <b>50</b> מ״ל, לא 500 (הזז את הנקודה 3 מקומות).</div>
+    <p class="center"><button class="btn big" onclick="go('trainer')">🎯 למאמן ההמרות</button></p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">🧪 כלים למדידת נפח (מהספר, עמ׳ 59)</h3>
+    <p>את הנפח של גוף בצורה הנדסית (תיבה, קובייה, גליל) אפשר <b>לחשב</b>: מודדים את הממדים שלו בסרגל או בסרט מדידה ומציבים בנוסחה. אבל כדי למדוד נפח של <b>נוזלים, גזים ומוצקים בצורות שונות</b> צריך כלים מיוחדים:</p>
+    <ul>
+      <li><b>משורה</b>: הכלי <b>המדויק</b> ביותר מבין הכלים שלמדנו. גבוהה וצרה, עם שנתות צפופות.</li>
+      <li><b>מזרק</b>: לכמויות קטנות, למשל תרופה לתינוק (נמדד במ״ל).</li>
+      <li><b>פיפטה</b>: לכמויות קטנות.</li>
+      <li><b>כוס מדידה</b>: במטבח, לקמח, סוכר ומים.</li>
+      <li><b>כוס כימית</b> ו<b>בקבוק קוני</b> (ארלנמייר): השנתות בהם <b>משוערות בלבד</b>, לא מדויקות.</li>
+    </ul>
+    <div class="box key"><b class="lbl">📌 שְׁנָתוֹת (ביחיד: שֶׁנֶת)</b>לפי הספר: <b>קווי חלוקה שמסומנים במרחק קבוע זה מזה</b> ומשמשים למדידה. השנתות שעל המשורה מאפשרות למדוד את נפח החומר שבה. (גם לסרגל יש שנתות, שבעזרתן מודדים אורך, ולמדחום יש שנתות, שבעזרתן מודדים טמפרטורה.)</div>
+    <h3>👁️ איך קוראים נכון משורה?</h3>
+    <div class="row" style="align-items:flex-start">
+      <svg viewBox="0 0 260 260" width="260" height="260" aria-label="קריאת משורה ומניסקוס">
+        <defs><linearGradient id="wat" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#74c0fc"/><stop offset="1" stop-color="#339af0"/></linearGradient></defs>
+        <rect x="70" y="20" width="70" height="210" rx="4" fill="#f8fbff" stroke="#495057" stroke-width="2"/>
+        <path d="M70 120 Q105 138 140 120 L140 228 L70 228 Z" fill="url(#wat)" opacity=".85"/>
+        <path d="M70 120 Q105 138 140 120" fill="none" stroke="#1864ab" stroke-width="2"/>
+        <g stroke="#495057" stroke-width="1.5">
+          <line x1="70" y1="49" x2="95" y2="49"/><line x1="70" y1="69" x2="85" y2="69"/><line x1="70" y1="89" x2="95" y2="89"/><line x1="70" y1="109" x2="85" y2="109"/>
+          <line x1="70" y1="129" x2="95" y2="129"/><line x1="70" y1="149" x2="85" y2="149"/><line x1="70" y1="169" x2="95" y2="169"/><line x1="70" y1="189" x2="85" y2="189"/><line x1="70" y1="209" x2="95" y2="209"/>
+        </g>
+        <g font-size="11" fill="#212529" font-family="Arial"><text x="100" y="53">50</text><text x="100" y="93">40</text><text x="100" y="133">30</text><text x="100" y="173">20</text><text x="100" y="213">10</text></g>
+        <line x1="0" y1="129" x2="66" y2="129" stroke="#e8590c" stroke-width="2" stroke-dasharray="5 4"/>
+        <circle cx="12" cy="129" r="9" fill="#fff" stroke="#e8590c" stroke-width="2"/><circle cx="14" cy="129" r="3.5" fill="#e8590c"/>
+        <path d="M145 129 L175 129" stroke="#c92a2a" stroke-width="2" marker-end="url(#ah)"/>
+        <text x="178" y="125" font-size="12" fill="#c92a2a" font-family="Arial">תחתית</text><text x="178" y="140" font-size="12" fill="#c92a2a" font-family="Arial">המניסקוס</text>
+        <text x="178" y="158" direction="rtl" text-anchor="end" font-size="12" fill="#2b8a3e" font-family="Arial" font-weight="bold">= 30 מ״ל</text>
+        <rect x="40" y="230" width="130" height="10" fill="#adb5bd"/>
+        <text x="5" y="112" font-size="11" fill="#e8590c" font-family="Arial">העין בגובה</text>
+      </svg>
+      <ol style="flex:1;min-width:240px">
+        <li>מניחים את המשורה על <b>משטח ישר ואופקי</b>.</li>
+        <li>בוחרים משורה <b>בגודל מתאים</b> לכמות (כדי למדוד 8 מ״ל, לא משתמשים במשורה של 500 מ״ל).</li>
+        <li>בודקים <b>כמה שווה כל שנת</b>: מחלקים את ההפרש בין שני מספרים צמודים במספר המרווחים ביניהם. בציור: מ-20 ל-30 יש 2 מרווחים, ולכן כל שנת = 10 ÷ 2 = <b>5 מ״ל</b>.</li>
+        <li>מורידים את <b>העיניים לגובה פני הנוזל</b>. אם מסתכלים מלמעלה או מלמטה, הקריאה יוצאת שגויה.</li>
+        <li>פני המים בכלי צר מעוקלים. העיקול נקרא <b>מניסקוס</b>, וקוראים לפי <b>התחתית שלו</b>.</li>
+        <li>רושמים את התוצאה <b>עם יחידות</b> (מ״ל).</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">🧊 נפח של מוצק בעל צורה הנדסית (קובייה): 2 שיטות (הספר, עמ׳ 60)</h3>
+    <h4 style="margin:.4em 0">שיטה 1️⃣: מדידה בסרגל וחישוב לפי נוסחה</h4>
+    <div class="row" style="align-items:center">
+      <svg viewBox="0 0 220 200" width="220" height="200" aria-label="קובייה">
+        <polygon points="40,70 140,70 140,170 40,170" fill="#ffe8cc" stroke="#d9480f" stroke-width="2"/>
+        <polygon points="40,70 80,35 180,35 140,70" fill="#ffd8a8" stroke="#d9480f" stroke-width="2"/>
+        <polygon points="140,70 180,35 180,135 140,170" fill="#ffc078" stroke="#d9480f" stroke-width="2"/>
+        <text x="60" y="190" direction="rtl" text-anchor="end" font-family="Arial" font-size="15" fill="#d9480f" font-weight="bold">צלע = 3 ס״מ</text>
+        <text x="2" y="125" font-family="Arial" font-size="15" fill="#d9480f" font-weight="bold">a</text>
+        <text x="165" y="115" font-family="Arial" font-size="15" fill="#d9480f" font-weight="bold">a</text>
+      </svg>
+      <div style="flex:1;min-width:240px">
+        <p>לכל הצלעות של קובייה יש אותו אורך (a).</p>
+        <div class="formula">נפח קובייה = צלע × צלע × צלע</div>
+        <div class="formula" style="font-size:1.1rem">V = a × a × a = a³</div>
+        <p><b>דוגמה:</b> קובייה שאורך הצלע שלה 3 ס״מ:<br>3 × 3 × 3 = <b>27 סמ״ק</b> (= 27 מ״ל)</p>
+        <p class="small">כשהצלע נמדדת ב<b>ס״מ</b>, הנפח יוצא ב<b>סמ״ק</b>.</p>
+      </div>
+    </div>
+    <table>
+      <tr><th>צלע (ס״מ)</th><th>חישוב</th><th>נפח (סמ״ק)</th></tr>
+      <tr><td>1</td><td>1×1×1</td><td>1</td></tr>
+      <tr><td>2</td><td>2×2×2</td><td>8</td></tr>
+      <tr><td>4</td><td>4×4×4</td><td>64</td></tr>
+      <tr><td>5</td><td>5×5×5</td><td>125</td></tr>
+      <tr><td>10</td><td>10×10×10</td><td>1,000 = <b>ליטר אחד!</b></td></tr>
+    </table>
+    <div class="box mistake"><b class="lbl">⚠️ טעות נפוצה</b>2 × 2 × 2 = <b>8</b>, לא 6! (6 יוצא אם מחברים 2+2+2 או כופלים 2×3.)</div>
+    <p>📦 <b>תיבה</b> (קופסה): נפח = אורך × רוחב × גובה. לדוגמה 4 × 3 × 2 = 24 סמ״ק. (בספר: "נפח של גוף הנדסי כמו קובייה או תיבה מחושב בהכפלת שלושת ממדיו: האורך, הגובה והרוחב".)</p>
+
+    <h4 style="margin:1.2em 0 .4em">שיטה 2️⃣: שקיעה (השקעה) במשורה עם מים</h4>
+    <div class="row" style="align-items:flex-start">
+      <svg viewBox="0 0 300 200" width="300" height="200" aria-label="השקעת קוביות במשורה">
+        <g font-family="Arial" font-size="11">
+          <rect x="40" y="20" width="50" height="160" rx="3" fill="#f8fbff" stroke="#495057" stroke-width="2"/>
+          <rect x="41" y="100" width="48" height="79" fill="#74c0fc" opacity=".8"/>
+          <line x1="40" y1="100" x2="58" y2="100" stroke="#495057" stroke-width="1.5"/><text x="94" y="104">50</text>
+          <line x1="40" y1="60" x2="58" y2="60" stroke="#495057" stroke-width="1.5"/><text x="94" y="64">100</text>
+          <text x="65" y="196" text-anchor="middle" direction="rtl">לפני</text>
+          <path d="M120 100 L160 100" stroke="#495057" stroke-width="2"/><path d="M152 94 L160 100 L152 106" fill="none" stroke="#495057" stroke-width="2"/>
+          <rect x="190" y="20" width="50" height="160" rx="3" fill="#f8fbff" stroke="#495057" stroke-width="2"/>
+          <rect x="191" y="84" width="48" height="95" fill="#74c0fc" opacity=".8"/>
+          <rect x="198" y="160" width="14" height="14" fill="#e8590c"/><rect x="216" y="160" width="14" height="14" fill="#e8590c"/><rect x="207" y="144" width="14" height="14" fill="#e8590c"/><rect x="203" y="128" width="14" height="14" fill="#e8590c"/>
+          <line x1="190" y1="100" x2="208" y2="100" stroke="#495057" stroke-width="1.5"/><text x="244" y="104">50</text>
+          <line x1="190" y1="84" x2="208" y2="84" stroke="#c92a2a" stroke-width="2"/><text x="244" y="88" fill="#c92a2a" font-weight="bold">70</text>
+          <line x1="190" y1="60" x2="208" y2="60" stroke="#495057" stroke-width="1.5"/><text x="244" y="64">100</text>
+          <text x="215" y="196" text-anchor="middle" direction="rtl">אחרי (4 קוביות)</text>
+        </g>
+      </svg>
+      <ol style="flex:1;min-width:240px">
+        <li>מכניסים מים למשורה של 100 מ״ל, עד <b>50 מ״ל</b>.</li>
+        <li>מכניסים בזהירות כמה <b>קוביות זהות</b> וקוראים את הנפח של <b>המים והקוביות יחד</b>.</li>
+        <li>בודקים <b>בכמה סמ״ק עלו פני המים</b>: הנפח אחרי פחות הנפח לפני.</li>
+        <li><b>הנפח של כל הקוביות שהכנסנו שווה לעלייה בנפח המים.</b> מחלקים במספר הקוביות ומקבלים את הנפח של קובייה אחת.</li>
+      </ol>
+    </div>
+    <div class="box tip"><b class="lbl">🧮 דוגמה</b>לפני: 50 מ״ל. אחרי שהכנסנו 4 קוביות: 70 מ״ל.<br>עלייה: 70 − 50 = <b>20 מ״ל = 20 סמ״ק</b> (הנפח של 4 הקוביות).<br>נפח של קובייה אחת: 20 ÷ 4 = <b>5 סמ״ק</b>.</div>
+    <div class="box key"><b class="lbl">📌 המסקנה מהפעילות</b>שתי השיטות נותנות <b>תוצאה זהה (או כמעט זהה)</b>, ולכן אפשר למצוא את הנפח של קובייה גם בחישוב לפי נוסחה וגם בהשקעה במשורה. הבדל קטן בין התוצאות נובע מ<b>אי-דיוק במדידה</b>, בסרגל או בקריאת המשורה.</div>
+    <div class="box tip"><b class="lbl">➕ בונוס (עמ׳ 61): גוף שצורתו לא הנדסית</b>לאבן, למפתח או לגוש פלסטלינה אי אפשר לחשב נפח בנוסחה, ולכן משתמשים <b>רק בשיטה 2</b>: מכניסים את הגוף למשורה עם מים, ו<b>ההפרש</b> בין הקריאות הוא נפח הגוף.</div>
+  </div>
+  <div class="box exam"><b class="lbl">🎯 מה חשוב למבחן</b>הגדרת נפח ("המקום שהגוף תופס במרחב") · יחידות, ואיזו יחידה מתאימה לאיזה גוף · המרות ליטר ⇄ מ״ל ⇄ סמ״ק ⇄ מ״ק (עם מחשבון) · כלים למדידת נפח ומהן שנתות · איך מודדים נוזל במשורה · <b>נפח קובייה בשתי שיטות</b> (נוסחה, ושקיעה במשורה). בספר: עמ׳ 57–60.</div>
+  <h3>✍️ בדוק את עצמך</h3>
+  <div id="quiz-t6"></div>
+</section>
+
+<!-- ================= TRAINER ================= -->
+<section class="view" id="view-trainer">
+  <h2>🎯 מאמן המרות ונפח</h2>
+  <div class="card center">
+    <div class="row" style="justify-content:center">
+      <span>רצף: <b id="trStreak">0</b> 🔥</span><span>·</span><span>שיא: <b id="trBest">0</b></span><span>·</span><span>נכון: <b id="trRight">0</b> / <b id="trTotal">0</b></span>
+    </div>
+    <p style="font-size:1.5rem;font-weight:700;margin:22px 0 10px" id="trQ"></p>
+    <div class="row" style="justify-content:center">
+      <input type="text" inputmode="decimal" id="trIn" style="font:inherit;font-size:1.3rem;width:170px;text-align:center;border:2px solid #c9d0de;border-radius:10px;padding:6px" onkeydown="if(event.key==='Enter')trCheck()">
+      <span id="trUnit" style="font-size:1.2rem"></span>
+    </div>
+    <div class="row" style="justify-content:center;margin-top:14px">
+      <button class="btn" onclick="trCheck()">בדוק</button><button class="btn ghost" onclick="trNext()">שאלה אחרת</button>
+    </div>
+    <div id="trFb" class="fb" style="margin-top:14px"></div>
+    <p class="small">מטרה: 10 תשובות נכונות ברצף! 💪</p>
+  </div>
+</section>
+
+<!-- ================= FLASHCARDS ================= -->
+<section class="view" id="view-cards">
+  <h2>🃏 כרטיסיות</h2>
+  <div class="row"><label>נושא: <select id="fcTopic" onchange="fcStart()" style="font:inherit;padding:4px 8px;border-radius:8px"></select></label>
+    <span class="small" id="fcCount"></span></div>
+  <div class="fc-stage"><div class="fc" id="fc" onclick="this.classList.toggle('flip')"><div class="face front" id="fcFront"></div><div class="face back" id="fcBack"></div></div></div>
+  <p class="center small">לחץ על הכרטיס כדי להפוך אותו</p>
+  <div class="row" style="justify-content:center">
+    <button class="btn ghost" onclick="fcAnswer(false)">😕 לא ידעתי (יחזור שוב)</button>
+    <button class="btn" onclick="fcAnswer(true)">😎 ידעתי!</button>
+  </div>
+</section>
+
+<!-- ================= EXAMS ================= -->
+<section class="view" id="view-exams">
+  <h2>📝 מבחני תרגול</h2>
+  <div id="examMenu">
+    <div class="card"><p style="margin-top:0">כל מבחן מכסה את <b>כל 6 הנושאים</b> ובנוי כמו מבחן אמיתי: אמריקאיות, נכון/לא נכון, התאמה, חישובים ושאלות פתוחות. בשאלות הפתוחות כותבים תשובה מלאה, ואחרי ההגשה מסמנים אילו נקודות מתשובת המורה כללת.</p>
+    <div class="box tip" style="margin-bottom:0"><b class="lbl">💡 איך לתרגל נכון</b>פתור כמו במבחן אמיתי, בלי להציץ בשיעורים. בסוף תקבל ציון ורשימה של הנושאים שכדאי לחזור עליהם.</div></div>
+    <div class="topics-grid" id="examCards"></div>
+  </div>
+  <div id="examRun" style="display:none">
+    <div class="sticky-bar row" style="justify-content:space-between">
+      <b id="examTitle"></b>
+      <div class="row"><span class="timer" id="examTimer">00:00</span><button class="btn ghost" onclick="examExit()">יציאה</button></div>
+    </div>
+    <div id="examQs"></div>
+    <div class="center" style="margin:20px 0"><button class="btn big" id="examSubmit" onclick="examSubmit()">✅ הגש מבחן</button></div>
+    <div id="examResult"></div>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* ============================================================
+   DATA
+   ============================================================ */
+const TOPICS = [
+  {id:`t1`, name:`מבוא למדעים`, color:`var(--t1)`, icon:`🔬`},
+  {id:`t2`, name:`מדע וטכנולוגיה`, color:`var(--t2)`, icon:`⚙️`},
+  {id:`t3`, name:`הסרט "סופי בהחלט"`, color:`var(--t3)`, icon:`🎬`},
+  {id:`t4`, name:`כלי מעבדה`, color:`var(--t4)`, icon:`🧪`},
+  {id:`t5`, name:`בטיחות במעבדה`, color:`var(--t5)`, icon:`🥽`},
+  {id:`t6`, name:`נפח ויחידות מידה`, color:`var(--t6)`, icon:`📏`},
+];
+const TOPIC = Object.fromEntries(TOPICS.map(t=>[t.id,t]));
+
+const CHAPTERS = [
+  [`פתיחה: "סופי לעת עתה"`, 82], [`אריסטו, גלילאו, ניוטון`, 92], [`קליינמן: ספקנות`, 157],
+  [`הנפח והברונזה`, 243], [`שירלי המהנדסת`, 439], [`חשיבות המדידה`, 549], [`האבן והנוצה`, 644],
+  [`הניסוי על הירח`, 784], [`משאבת הריק`, 814], [`המישור המשופע`, 918], [`הפגז וניוטון`, 1208],
+  [`מדען לעומת מהנדס`, 1313], [`לוויינים`, 1429], [`המדע: טוב או רע?`, 1476],
+];
+
+/* tool drawings (simple line art) */
+const S = (inner)=>`<svg viewBox="0 0 80 100" fill="none" stroke="#343a40" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
+const W = `fill="#a5d8ff" stroke="none"`;
+const TOOLS = [
+  {n:`מבחנה`, m:[[`glass`,`זכוכית`]], svg:S(`<path d="M30 8 V80 a10 10 0 0 0 20 0 V8"/><path d="M26 8 H54"/><path d="M31 55 V80 a9 9 0 0 0 18 0 V55 Z" ${W}/>`),
+    use:`ביצוע ניסויים בכמויות קטנות של חומר, ערבוב וחימום.`,
+    why:`זכוכית: שקופה (רואים את השינויים), עמידה בחום (אפשר לחמם) ולא מגיבה עם החומרים.`,
+    fit:`צרה וארוכה, מתאימה לכמויות קטנות ולנענוע. התחתית המעוגלת מתחממת באופן אחיד וקל לנקות אותה.`},
+  {n:`מתקן (מעמד) למבחנות`, m:[[`plastic`,`פלסטיק`],[`wood`,`עץ`],[`metal`,`מתכת`]], svg:S(`<rect x="6" y="40" width="68" height="12" rx="2"/><path d="M10 52 V88 M70 52 V88 M6 88 H74"/><path d="M18 20 V70 M40 20 V70 M62 20 V70" stroke="#74c0fc"/>`),
+    use:`מחזיק את המבחנות זקופות כדי שלא ייפלו ולא יישפכו.`,
+    why:`חומר חזק ויציב שלא נשבר.`,
+    fit:`חורים בקוטר של מבחנה ובסיס רחב ליציבות.`},
+  {n:`מחזיק (צבת) מבחנות`, m:[[`wood`,`עץ`],[`metal`,`מתכת`]], svg:S(`<path d="M10 70 L50 30" stroke="#8d6e63" stroke-width="7"/><path d="M50 30 L72 12 M50 30 L74 22"/><circle cx="50" cy="30" r="3"/>`),
+    use:`אחיזת מבחנה בזמן חימום, כדי לא להיכוות.`,
+    why:`הידית מ<b>עץ</b>, שמוליך חום גרוע (מבודד) ולכן לא מתחמם. הצבת והקפיץ ממתכת חזקה.`,
+    fit:`ארוך, כדי שהיד תהיה רחוקה מהלהבה. הקפיץ לוחץ ומחזיק את המבחנה חזק.`},
+  {n:`כוס כימית`, m:[[`glass`,`זכוכית`],[`plastic`,`פלסטיק`]], svg:S(`<path d="M16 14 L20 18 V86 H60 V14"/><path d="M14 12 Q16 14 20 14"/><path d="M21 50 H59 V85 H21 Z" ${W}/><path d="M24 30 H32 M24 42 H32 M24 54 H32 M24 66 H32"/>`),
+    use:`ערבוב, חימום והכנת תמיסות. מדידת נפח <b>משוערת</b> בלבד.`,
+    why:`זכוכית עמידה בחום ושקופה. פלסטיק לא נשבר (אבל לא מחממים בה).`,
+    fit:`פה רחב שקל להכניס ולערבב בו, "אף" (שפך) קטן לשפיכה נוחה ובסיס שטוח ויציב.`},
+  {n:`ארלנמייר (בקבוק קוני)`, m:[[`glass`,`זכוכית`]], svg:S(`<path d="M32 10 V36 L12 86 H68 L48 36 V10"/><path d="M29 10 H51"/><path d="M19 68 H61 L68 86 H12 Z" ${W}/>`),
+    use:`ערבוב, נענוע וחימום נוזלים, והכנת תמיסות.`,
+    why:`זכוכית שקופה, עמידה בחום ולא מגיבה.`,
+    fit:`<b>צוואר צר</b>: מונע ניתזים ואידוי, אפשר לנער בלי לשפוך ולסגור בפקק. <b>בסיס רחב</b>: יציב.`},
+  {n:`משורה`, m:[[`glass`,`זכוכית`],[`plastic`,`פלסטיק`]], svg:S(`<path d="M30 6 V82 H50 V6"/><path d="M27 6 Q30 4 33 6"/><path d="M18 82 H62 V90 H18 Z"/><path d="M31 40 H49 V81 H31 Z" ${W}/><path d="M30 16 H38 M30 26 H35 M30 36 H38 M30 46 H35 M30 56 H38 M30 66 H35 M30 76 H38"/>`),
+    use:`<b>מדידת נפח של נוזל בדיוק</b>.`,
+    why:`זכוכית שקופה (רואים את פני הנוזל) ולא מגיבה, או פלסטיק שלא נשבר.`,
+    fit:`<b>גבוהה וצרה</b> עם שנתות צפופות, ולכן מדויקת. <b>בסיס רחב</b> ליציבות ופייה לשפיכה.`},
+  {n:`מזרק`, m:[[`plastic`,`פלסטיק`],[`rubber`,`גומי`]], svg:S(`<path d="M30 20 V80 H50 V20"/><path d="M26 20 H54"/><path d="M40 80 V94"/><path d="M40 20 V4 M32 4 H48"/><path d="M31 56 H49 V79 H31 Z" ${W}/><path d="M30 32 H36 M30 44 H36 M30 56 H36 M30 68 H36"/>`),
+    use:`מדידה והוספה של כמויות קטנות של נוזל, למשל תרופה לתינוק (במ״ל).`,
+    why:`פלסטיק שקוף (רואים את השנתות) ולא נשבר. בקצה הבוכנה יש גומי שאוטם.`,
+    fit:`צינור צר עם שנתות. הבוכנה שואבת ודוחפת את הנוזל.`},
+  {n:`משפך`, m:[[`glass`,`זכוכית`],[`plastic`,`פלסטיק`]], svg:S(`<path d="M8 12 H72 L46 50 V90 H34 V50 Z"/>`),
+    use:`העברת נוזל לכלי עם פתח צר בלי לשפוך. משמש גם ל<b>סינון</b> עם נייר סינון.`,
+    why:`חלק ולא מגיב. פלסטיק לא נשבר.`,
+    fit:`חלק עליון רחב (קל לשפוך לתוכו) שהולך ונהיה צר, וצינור דק שנכנס לפתח הצר.`},
+  {n:`טפטפת (פיפטה)`, m:[[`glass`,`זכוכית`],[`plastic`,`פלסטיק`],[`rubber`,`גומי`]], svg:S(`<path d="M34 30 V80 L40 94 L46 80 V30"/><path d="M32 8 Q32 2 40 2 Q48 2 48 8 V30 H32 Z" fill="#f783ac" stroke="#a61e4d"/>`),
+    use:`העברת כמויות קטנות של נוזל, טיפה אחר טיפה.`,
+    why:`צינור מזכוכית או פלסטיק שקוף. <b>פטמת גומי</b> גמישה: לוחצים, והיא חוזרת לצורתה ושואבת נוזל.`,
+    fit:`קצה דק ומחודד שמוציא טיפות קטנות.`},
+  {n:`מבער (בונזן / גזייה)`, m:[[`metal`,`מתכת`]], svg:S(`<path d="M34 40 V82 H46 V40 Z"/><path d="M20 82 H60 V90 H20 Z"/><path d="M40 38 Q30 26 40 8 Q50 26 40 38" fill="#ffa94d" stroke="#e8590c"/>`),
+    use:`חימום.`,
+    why:`מתכת עמידה בחום גבוה ולא נשרפת.`,
+    fit:`בסיס כבד ויציב. אפשר לווסת את הלהבה.`},
+  {n:`חצובה ורשת`, m:[[`metal`,`מתכת`]], svg:S(`<path d="M10 30 H70"/><path d="M14 26 H66" stroke-dasharray="3 3"/><path d="M18 30 L10 92 M40 30 V92 M62 30 L70 92"/>`),
+    use:`מחזיקה כלי (כוס כימית או ארלנמייר) מעל המבער בזמן חימום.`,
+    why:`מתכת חזקה ועמידה בחום.`,
+    fit:`שלוש רגליים יציבות. ה<b>רשת</b> מפזרת את החום באופן אחיד ומונעת מהזכוכית להיסדק.`},
+  {n:`כף כימית / מרית`, m:[[`metal`,`מתכת`],[`plastic`,`פלסטיק`]], svg:S(`<path d="M20 86 L58 20"/><ellipse cx="62" cy="14" rx="7" ry="10" transform="rotate(30 62 14)"/>`),
+    use:`לקיחת אבקות ומוצקים, כדי <b>לא לגעת בחומרים בידיים</b>.`,
+    why:`מתכת (נירוסטה) חזקה, קלה לניקוי ולא מחלידה.`,
+    fit:`קצה קטן ושקוע שמתאים לכמויות קטנות.`},
+  {n:`צלוחית אידוי`, m:[[`porcelain`,`חרסינה`]], svg:S(`<path d="M8 40 Q40 86 72 40 Z" fill="#f3e5f5"/><path d="M8 40 H72"/>`),
+    use:`אידוי נוזל מתמיסה (למשל כדי לקבל מלח ממי מלח).`,
+    why:`חרסינה עמידה בטמפרטורות גבוהות מאוד.`,
+    fit:`רדודה ורחבה. שטח פנים גדול מזרז את האידוי.`},
+  {n:`זכוכית שעון`, m:[[`glass`,`זכוכית`]], svg:S(`<path d="M6 46 Q40 66 74 46"/>`),
+    use:`כיסוי כוס כימית, ואידוי או הנחה של כמות קטנה של חומר.`,
+    why:`זכוכית שקופה ולא מגיבה.`,
+    fit:`קעורה, ולכן החומר לא בורח הצידה.`},
+  {n:`פקק גומי`, m:[[`rubber`,`גומי`]], svg:S(`<path d="M24 30 H56 L50 70 H30 Z" fill="#ffc9c9" stroke="#c92a2a"/>`),
+    use:`סגירה של מבחנה או ארלנמייר.`,
+    why:`גומי <b>גמיש ואוטם</b>: נצמד לדפנות ולא נותן לנוזל או לגז לצאת.`,
+    fit:`צורת חרוט שנכנסת לפתחים בגדלים שונים.`},
+  {n:`מדחום`, m:[[`glass`,`זכוכית`]], svg:S(`<path d="M36 8 V74 a8 8 0 1 0 8 0 V8 a4 4 0 0 0 -8 0"/><circle cx="40" cy="81" r="5" fill="#e03131" stroke="none"/><path d="M40 78 V40" stroke="#e03131" stroke-width="3"/>`),
+    use:`מדידת טמפרטורה.`,
+    why:`זכוכית שקופה, ורואים בה את עמודת הנוזל.`,
+    fit:`צינור דק מאוד: שינוי קטן בטמפרטורה מזיז את הנוזל בבירור. מכל (בועה) בתחתית.`},
+  {n:`בקבוק שטיפה (מזלף)`, m:[[`plastic`,`פלסטיק`]], svg:S(`<path d="M22 36 H58 V90 H22 Z"/><path d="M34 36 V26 H46 V36"/><path d="M40 26 V14 L64 6"/><path d="M23 60 H57 V89 H23 Z" ${W}/>`),
+    use:`שטיפה של כלים והוספת מים מזוקקים בזרם מכוון.`,
+    why:`פלסטיק <b>גמיש</b>: לוחצים על הבקבוק והמים יוצאים. הוא גם לא נשבר.`,
+    fit:`צינורית מכופפת שמכוונת את הזרם.`},
+  {n:`משקפי מגן`, m:[[`plastic`,`פלסטיק`]], svg:S(`<path d="M6 40 Q6 30 16 30 H64 Q74 30 74 40 V54 Q74 62 64 62 H50 L40 52 L30 62 H16 Q6 62 6 54 Z" fill="#e7f5ff"/>`),
+    use:`הגנה על העיניים מפני ניתזים ושברים.`,
+    why:`פלסטיק <b>שקוף</b> (רואים דרכו) <b>ולא נשבר</b>.`,
+    fit:`מכסים את העיניים גם מהצדדים.`},
+];
+
+/* ---------------- QUESTION BANK ---------------- */
+const Q = [
+/* ===== t1 ===== */
+{id:`a1`, t:`t1`, type:`mc`, q:`מהו מדע?`, o:[`דרך לחקור ולהבין את העולם בעזרת שאלות, תצפיות, ניסויים ומדידות`,`פיתוח מוצרים ומכשירים שימושיים לבני אדם`,`אוסף של אמונות ודעות שאי אפשר לבדוק`,`לימוד של מתמטיקה ומחשבים בלבד`], a:0, ex:`מדע = חקר העולם כדי להבין ולהסביר. פיתוח מוצרים הוא טכנולוגיה.`},
+{id:`a2`, t:`t1`, type:`mc`, q:`איזה תחום מדע חוקר את מבנה החומר, את הרכב החומרים, את התכונות שלהם ואת השינויים שקורים בהם?`, o:[`כימיה`,`פיזיקה`,`ביולוגיה`,`אסטרונומיה`], a:0, ex:`כימיה. לפי הספר היא חוקרת את מבנה החומר, הרכבו, תכונותיו ושינויים בחומרים, ומפתחת חומרים חדשים.`},
+{id:`a3`, t:`t1`, type:`mc`, q:`במה עוסק מדע הפיזיקה?`, o:[`בשאלות הבסיסיות על היקום: תנועה, כוחות, אנרגיה, אור וחשמל`,`ביצורים חיים וצמחים`,`בהכנת תרופות בלבד`,`בהיסטוריה של המדע`], a:0, ex:`הפיזיקה מנסחת חוקים בסיסיים שמסבירים תופעות, למשל חוק הכבידה וחוק שימור האנרגיה.`},
+{id:`a4`, t:`t1`, type:`classify`, q:`התאם כל תחום מדע למה שהוא חוקר:`, cats:[`ביולוגיה`,`כימיה`,`פיזיקה`,`אסטרונומיה`,`מדעי כדור הארץ`], items:[[`איך פועל הלב של האדם`,0],[`ממה מורכב חומר ואיך הוא משתנה`,1],[`למה גופים נופלים ואיך נוצר ברק`,2],[`תנועת כוכבי הלכת סביב השמש`,3],[`איך נוצרות רעידות אדמה`,4]], ex:`ביולוגיה = יצורים חיים · כימיה = חומרים · פיזיקה = תנועה, כוחות ואנרגיה · אסטרונומיה = החלל · מדעי כדור הארץ = סלעים, מזג אוויר ורעידות אדמה.`},
+{id:`a5`, t:`t1`, type:`mc`, q:`לפי הספר "מדעי החומר", מהם שני המושגים החיוניים לתיאור היקום?`, o:[`חומר ואנרגיה`,`מדע וטכנולוגיה`,`אור וקול`,`מוצק ונוזל`], a:0, ex:`חומרים מרכיבים את העולם הפיזי, ואנרגיה היא הגורם שמניע תהליכים.`},
+{id:`a6`, t:`t1`, type:`mc`, q:`מהו הסדר הנכון של שלבי החקר המדעי?`, o:[`שאלת חקר ➜ השערה ➜ ניסוי ➜ תוצאות ➜ מסקנה`,`מסקנה ➜ ניסוי ➜ השערה ➜ שאלה`,`ניסוי ➜ שאלה ➜ מסקנה ➜ השערה`,`השערה ➜ מסקנה ➜ שאלה ➜ ניסוי`], a:0, ex:`קודם שואלים, אחר כך משערים, בודקים בניסוי ומסיקים מסקנה.`},
+{id:`a7`, t:`t1`, type:`mc`, q:`בניסוי שבודק איך משקל המשקולת משפיע על התארכות הקפיץ, מהו הגורם המשפיע?`, o:[`משקל המשקולת`,`התארכות הקפיץ`,`סוג הקפיץ`,`הזמן`], a:0, ex:`הגורם המשפיע הוא מה שמשנים בכוונה (משקל המשקולת). הגורם המושפע הוא מה שמודדים (התארכות הקפיץ).`},
+{id:`a8`, t:`t1`, type:`tf`, q:`ידע מדעי שהוכח בניסויים נכון לתמיד ולעולם לא ישתנה.`, a:false, ex:`לא נכון. הידע המדעי "סופי לעת עתה": הוא יכול להשתנות כשמגיעות ראיות חדשות (למשל, "הארץ היא מרכז היקום").`},
+{id:`a9`, t:`t1`, type:`mc`, q:`מהי השערה?`, o:[`תשובה אפשרית לשאלת החקר, שמבוססת על ידע קודם ונבדקת בניסוי`,`התוצאה הסופית של הניסוי`,`רשימת הכלים לניסוי`,`עובדה שכבר הוכחה`], a:0, ex:`השערה = ניחוש מושכל שבודקים בניסוי. אחרי הניסוי היא מאושרת או מופרכת.`},
+{id:`a10`, t:`t1`, type:`mc`, q:`למה חוזרים על ניסוי כמה פעמים (חזרות)?`, o:[`כדי לוודא שהתוצאות נכונות ואמינות ולא יצאו במקרה`,`כדי שהניסוי ייקח יותר זמן`,`כי הניסוי הראשון תמיד שגוי`,`כדי לשנות את השערת המחקר`], a:0, ex:`חזרות מאפשרות לבדוק שהתוצאה עקבית.`},
+{id:`a11`, t:`t1`, type:`tf`, q:`ביולוגיה היא אחד התחומים שהספר "מדעי החומר" עוסק בהם.`, a:false, ex:`לא נכון. "מדעי החומר" עוסק בכימיה ובפיזיקה (ובטכנולוגיה). ביולוגיה שייכת למדעי החיים.`},
+{id:`a12`, t:`t1`, type:`open`, q:`הסבר מהו מדע, וציין שני תחומי מדע ובמה כל אחד מהם עוסק.`, pts:[`מדע הוא חקר העולם כדי להבין ולהסביר תופעות`,`בעזרת תצפיות, ניסויים ומדידות`,`תחום ראשון + מה הוא חוקר (למשל: כימיה, חומרים ותכונותיהם)`,`תחום שני + מה הוא חוקר (למשל: פיזיקה, תנועה, כוחות ואנרגיה)`], model:`מדע הוא דרך לחקור את העולם כדי להבין ולהסביר תופעות בטבע, בעזרת שאלות, תצפיות, ניסויים ומדידות. לדוגמה, כימיה חוקרת את מבנה החומר, את תכונות החומרים ואת השינויים שקורים בהם. פיזיקה חוקרת את החוקים הבסיסיים של היקום, כמו תנועה, כוחות, אנרגיה, אור וחשמל.`},
+{id:`a13`, t:`t1`, type:`mc`, q:`מה התפקיד של "בקרה" בניסוי?`, o:[`לבדוק שהתוצאה נגרמה באמת בגלל הגורם המשפיע ולא בגלל סיבה אחרת`,`לפקח על התלמידים`,`למדוד את הטמפרטורה`,`לחזור על הניסוי פעמיים`], a:0, ex:`הבקרה נערכת באותם תנאים בדיוק, אבל בלי הגורם המשפיע.`},
+
+/* ===== t2 ===== */
+{id:`b1`, t:`t2`, type:`mc`, q:`מהי טכנולוגיה?`, o:[`שימוש בידע כדי לפתח מוצרים, כלים ותהליכים שפותרים בעיות ומספקים צרכים של בני אדם`,`חקר העולם כדי להבין איך הוא פועל`,`רק מחשבים וטלפונים`,`ניסוח חוקי טבע`], a:0, ex:`טכנולוגיה = יישום ידע לפתרון בעיות. היא לא רק מחשבים: גם הגלגל והברונזה הם טכנולוגיה.`},
+{id:`b2`, t:`t2`, type:`classify`, q:`סווג: האם זה מדע או טכנולוגיה?`, cats:[`מדע`,`טכנולוגיה`], items:[[`גילוי הגלים האלקטרומגנטיים (הרץ)`,0],[`פיתוח מקלט רדיו`,1],[`חקר מבנה האטום`,0],[`בניית משאבת ריק`,1],[`ניסוח חוק הנפילה החופשית`,0],[`תכנון ושיגור לוויין תקשורת`,1],[`ייצור כלים מברונזה`,1]], ex:`מדע = גילוי והבנה (ידע). טכנולוגיה = בנייה, ייצור ופתרון בעיות (מוצר).`},
+{id:`b3`, t:`t2`, type:`mc`, q:`איזו שאלה מתאימה ל<b>מהנדס</b>?`, o:[`"קרה כך וכך: מה אני יכול לעשות עם זה? איזו תועלת אפשר להפיק?"`,`"אם אעשה כך וכך, מה יקרה?"`,`"מהי האמת הנצחית?"`,`"למה השמיים כחולים?"`], a:0, ex:`לפי קליינמן בסרט, המדען שואל "אם אעשה כך וכך, מה יקרה?" והמהנדס שואל "קרה כך וכך, מה אפשר לעשות עם זה?"`},
+{id:`b4`, t:`t2`, type:`mc`, q:`איזו מהדוגמאות מראה איך <b>טכנולוגיה עוזרת למדע</b>?`, o:[`בעזרת הטלסקופ גילה גלילאו ירחים שמקיפים את כוכב הלכת צדק`,`הרץ גילה גלים אלקטרומגנטיים ובעקבות זאת פותח הרדיו`,`ניוטון ניסח חוקי תנועה`,`אריסטו חשב על העולם בעזרת היגיון`], a:0, ex:`הטלסקופ (טכנולוגיה) נתן למדען כלי לגלות דבר חדש. הרץ והרדיו זה הכיוון ההפוך: מדע שעוזר לטכנולוגיה.`},
+{id:`b5`, t:`t2`, type:`tf`, q:`טכנולוגיה יכולה להתפתח גם בלי הבנה מדעית של התופעה.`, a:true, ex:`נכון. הנפח בקפריסין ייצר ברונזה לפני כ-3,500 שנה בלי להבין למה היא חזקה.`},
+{id:`b6`, t:`t2`, type:`tf`, q:`טכנולוגיה קיימת רק מאז שהומצא החשמל.`, a:false, ex:`לא נכון. כלי אבן, הגלגל, הכתב והברונזה הם טכנולוגיות עתיקות מאוד.`},
+{id:`b7`, t:`t2`, type:`mc`, q:`מהו התוצר של המדע, ומהו התוצר של הטכנולוגיה?`, o:[`מדע: ידע (חוקים ותאוריות) · טכנולוגיה: מוצרים, מכשירים ותהליכים`,`מדע: מכשירים · טכנולוגיה: תאוריות`,`לשניהם אותו תוצר`,`מדע: כסף · טכנולוגיה: ידע`], a:0, ex:`זו שורה מרכזית בטבלת ההשוואה!`},
+{id:`b8`, t:`t2`, type:`open`, q:`הסבר את הקשר בין מדע לטכנולוגיה. תן דוגמה אחת לכך שמדע עוזר לטכנולוגיה, ודוגמה אחת לכך שטכנולוגיה עוזרת למדע.`, pts:[`הקשר הוא דו-כיווני, והם צריכים שיתוף פעולה`,`דוגמה למדע ➜ טכנולוגיה (למשל: גלים אלקטרומגנטיים ➜ רדיו וסלולרי, או חוקי ניוטון ➜ לוויין)`,`דוגמה לטכנולוגיה ➜ מדע (למשל: משאבת ריק, טלסקופ, מיקרוסקופ, מאיץ חלקיקים)`,`הסבר קצר של כל דוגמה`], model:`מדע וטכנולוגיה עוזרים זה לזה. תגליות מדעיות מאפשרות לפתח טכנולוגיות חדשות: למשל, הרץ גילה את הגלים האלקטרומגנטיים, ובעזרת התגלית פיתחו את הרדיו ואת הטלפון הסלולרי. מנגד, הטכנולוגיה נותנת למדענים כלים לבדוק את התאוריות שלהם: למשל, משאבת הריק שבנו המהנדסים הוכיחה את ההשערה של גלילאו, שבריק נוצה ומטבע נופלים באותה מהירות. לכן צריך שיתוף פעולה בין מדענים למהנדסים.`},
+{id:`b9`, t:`t2`, type:`open`, q:`האם טכנולוגיה זה טוב או רע? נמק את תשובתך ותן שתי דוגמאות.`, pts:[`עמדה ברורה (למשל: לא טובה ולא רעה, תלוי בשימוש)`,`נימוק: הכול תלוי באופן שבו בני אדם משתמשים בה`,`דוגמה ראשונה עם צד טוב ו/או רע`,`דוגמה שנייה`], model:`הטכנולוגיה אינה טובה ואינה רעה בעצמה. הכול תלוי באופן שבו בני האדם משתמשים בה. לדוגמה, הטלפון הסלולרי עוזר להזעיק עזרה ולשמור על קשר (טוב), אבל יכול לגרום להתמכרות ולפגיעה בפרטיות (רע). המכונית מאפשרת להגיע מהר לבית החולים (טוב), אבל מזהמת את האוויר וגורמת לתאונות (רע). לכן האחריות שלנו היא להשתמש בטכנולוגיה בצורה נבונה.`},
+{id:`b10`, t:`t2`, type:`mc`, q:`מה המטרה העיקרית של <b>המדע</b>?`, o:[`להבין ולהסביר איך העולם פועל`,`להרוויח כסף`,`לבנות מכונות`,`לפתור בעיות בבית`], a:0, ex:`"לדעת על מנת לדעת": המדען מונע מסקרנות.`},
+
+/* ===== t3 ===== */
+{id:`c1`, t:`t3`, type:`mc`, q:`לפי הסרט, מה המשמעות של "הידע המדעי הוא סופי לעת עתה"?`, o:[`הידע נחשב נכון עד שמגיעות ראיות חדשות שמשנות אותו`,`הידע המדעי לא נכון`,`המדע הגיע לסופו ואין עוד מה לגלות`,`רק מה שאמר אריסטו נכון`], a:0, ex:`למשל: הארץ במרכז ➜ השמש במרכז (גלילאו) ➜ גם השמש לא במרכז (ניוטון).`},
+{id:`c2`, t:`t3`, type:`mc`, q:`איך עבד אריסטו, הפילוסוף?`, o:[`הסיק מסקנות בעזרת היגיון בלבד, בלי לבדוק אותן בניסויים`,`ערך ניסויים ומדידות מדויקות`,`בנה מכונות וכלים`,`השתמש במחשבים`], a:0, ex:`לפי שיטתו "ההיגיון לבדו הוא הקובע", ואין צורך לבדוק בניסוי.`},
+{id:`c3`, t:`t3`, type:`mc`, q:`מה ההבדל העיקרי בין גלילאו לבין אריסטו?`, o:[`גלילאו בדק את ההשערות שלו בניסויים ובמדידות, ואריסטו הסתמך על היגיון בלבד`,`אריסטו עשה יותר ניסויים מגלילאו`,`גלילאו היה מהנדס ואריסטו מדען`,`אין ביניהם הבדל`], a:0, ex:`גלילאו: "הנחות צריך לבדוק, בניסוי!"`},
+{id:`c4`, t:`t3`, type:`mc`, q:`לפי גלילאו, למה נוצה נופלת לאט יותר מאבן?`, o:[`בגלל החיכוך (ההתנגדות) של האוויר`,`כי האבן כבדה יותר`,`כי הנוצה "רוצה" לעלות למעלה`,`בגלל הרוח בלבד`], a:0, ex:`לא המשקל קובע את מהירות הנפילה, אלא החיכוך עם האוויר. בריק שתיהן נופלות יחד.`},
+{id:`c5`, t:`t3`, type:`mc`, q:`מה קרה כשהפילו מטבע ונוצה בצינור זכוכית <b>שרוקן מאוויר</b>?`, o:[`הם נפלו באותה מהירות`,`המטבע נפל הרבה יותר מהר`,`הנוצה נשארה באוויר`,`הנוצה נפלה מהר יותר`], a:0, ex:`בריק אין חיכוך עם אוויר, ולכן כל הגופים נופלים באותה מהירות.`},
+{id:`c6`, t:`t3`, type:`mc`, q:`גלילאו הפיל כדור עופרת וכדור עץ באותו גודל. העופרת כבדה פי 10. מה הייתה התוצאה?`, o:[`כדור העופרת הגיע קצת לפני כדור העץ, וההבדל היה קטן בהרבה מפי 10`,`כדור העופרת נפל מהר פי 10`,`כדור העץ הגיע ראשון`,`שניהם נעצרו באוויר`], a:0, ex:`אריסטו צדק רק בחלק קטן: העופרת הקדימה, אבל לא פי 10. ההבדל נובע מחיכוך האוויר.`},
+{id:`c7`, t:`t3`, type:`mc`, q:`למה אומרים בסרט ש"המהנדסים חסכו 300 שנה"?`, o:[`כי הם בנו משאבת ריק, שאפשרה לבדוק את ההשערה של גלילאו על כדור הארץ בלי לחכות לנחיתה על הירח`,`כי הם המציאו את המטוס`,`כי הם הוכיחו שאריסטו צדק`,`כי הם בנו את הטלסקופ`], a:0, ex:`דוגמה לשיתוף פעולה: המדען שיער, והמהנדסים בנו את הכלי לבדיקה.`},
+{id:`c8`, t:`t3`, type:`mc`, q:`מה ההבדל בין הנפח שמייצר ברונזה לבין המדען?`, o:[`הנפח יודע איך לייצר ברונזה אבל לא מבין למה יש לה התכונות שלה. המדען מסביר זאת בעזרת מבנה החומר (אטומים)`,`הנפח מבין יותר מהמדען`,`המדען יודע לייצר גרזן מברונזה`,`אין הבדל`], a:0, ex:`"לדעת" (איך עושים) לעומת "להבין" (למה זה קורה).`},
+{id:`c9`, t:`t3`, type:`mc`, q:`איך מייצרים ברונזה לפי הסרט?`, o:[`על כל 9 מנות נחושת מוסיפים מנה אחת של בדיל`,`מערבבים ברזל ועופרת`,`מחממים זהב`,`על כל מנה של נחושת מוסיפים 9 מנות בדיל`], a:0, ex:`ברונזה היא סגסוגת של נחושת ובדיל, קשה וחזקה יותר מכל אחת מהן לבד.`},
+{id:`c10`, t:`t3`, type:`classify`, q:`למי מתאים כל מאפיין: פילוסוף, מדען או מהנדס?`, cats:[`פילוסוף`,`מדען`,`מהנדס`], items:[[`מסתמך על היגיון בלבד ולא עורך ניסויים`,0],[`מחפש את "האמת האחת, הנצחית והסופית"`,0],[`רואה בעבודת כפיים "מלאכת עבדים"`,0],[`מעלה השערה ובודק אותה בניסוי`,1],[`מקפיד על מדידה מדויקת ושואל "בכמה?"`,1],[`"פותר חידות" כדי להבין, ולא בשביל תועלת`,1],[`פותר בעיות מעשיות ומפתח כלים ומכשירים`,2],[`שואל "איזו תועלת אפשר להפיק מזה?"`,2],[`בונה משאבת ריק ומשגר לוויינים`,2]], ex:`פילוסוף = היגיון ורעיונות · מדען = השערה, ניסוי, מדידה וספקנות · מהנדס = עשייה, יישום ותועלת.`},
+{id:`c11`, t:`t3`, type:`mc`, q:`מה הראה גלילאו בניסוי (המחשבתי) של הכדור על המישור המשופע?`, o:[`שבלי חיכוך גוף ממשיך לנוע בקו ישר ובאותה מהירות, גם בלי שפועל עליו כוח`,`שכדי שגוף ינוע צריך להפעיל עליו כוח כל הזמן`,`שהמצב הטבעי של כל גוף הוא מנוחה`,`שכדורים כבדים מתגלגלים מהר יותר`], a:0, ex:`בכך הוא הפריך את הטענה של אריסטו ש"כדי שגוף ינוע צריך להפעיל עליו כוח".`},
+{id:`c12`, t:`t3`, type:`mc`, q:`מה ניבא ניוטון על פגז שנורה מהר מספיק?`, o:[`שהוא לא ייפול, אלא יקיף את כדור הארץ, כלומר לוויין`,`שהוא יתפוצץ באוויר`,`שהוא ייפול מיד`,`שהוא יגיע לשמש`], a:0, ex:`כך ניבא ניוטון את הלוויין, מאות שנים לפני שהטכנולוגיה אפשרה לשגר אותו.`},
+{id:`c13`, t:`t3`, type:`mc`, q:`במה עזרו הניסויים של גלילאו לתותחנים?`, o:[`הוא גילה שהפגז עף במסלול בצורת קשת, ולא נופל בזווית ישרה`,`הוא המציא את התותח`,`הוא גילה את אבק השריפה`,`הם לא עזרו בכלום`], a:0, ex:`דוגמה לכך שהבנה מדעית יכולה להוביל לשימוש מעשי.`},
+{id:`c14`, t:`t3`, type:`mc`, q:`לפי הסרט, איזה שימוש מעשי צמח ממחקר מבנה האטום במאיץ החלקיקים?`, o:[`מכשירים לגילוי מוקדם של סרטן`,`טלפונים סלולריים`,`מכוניות חשמליות`,`מקררים`], a:0, ex:`כשתכננו את המאיץ, איש לא חשב על המטרה הזו. ידע בסיסי הוביל לשימוש לא צפוי.`},
+{id:`c15`, t:`t3`, type:`tf`, q:`לפי פרופ׳ קליינמן, הספקנות היא חולשה של המדע.`, a:false, ex:`לא נכון. "הספקנות הזאת היא כוחו של המדע": היא מאפשרת לשים סימן שאלה על כל דבר.`},
+{id:`c16`, t:`t3`, type:`tf`, q:`לפי הסרט, הידע המדעי כולל פרטים בדרגות ודאות שונות, ואף אחד מהם אינו ודאי לחלוטין.`, a:true, ex:`נכון. כך אמר קליינמן.`},
+{id:`c17`, t:`t3`, type:`mc`, q:`למה הניסוי על הירח הראה שפטיש ונוצה נופלים יחד?`, o:[`כי על הירח אין אוויר (ריק), ולכן אין חיכוך עם אוויר`,`כי על הירח הכול קל יותר`,`כי האסטרונאוט זרק את הפטיש לאט`,`כי הנוצה הייתה רטובה`], a:0, ex:`בלי אוויר אין התנגדות אוויר, ולכן כל הגופים נופלים באותה מהירות.`},
+{id:`c18`, t:`t3`, type:`open`, q:`האם המדע טוב או רע? נמק את תשובתך לפי הסרט ותן שתי דוגמאות.`, pts:[`המדע אינו טוב ואינו רע, הוא מכשיר או כלי`,`מה שבני אדם עושים בו יכול להיות טוב או רע: שאלה מוסרית, "הכול תלוי בנו"`,`דוגמה ראשונה (למשל: גנטיקה, ריפוי מחלות מול יצירת בני אדם הרסניים)`,`דוגמה שנייה (למשל: מחקר האטום, גילוי סרטן מול פצצה; או לוויינים, מלחמה מול תקשורת)`], model:`לפי הסרט, המדע אינו טוב ואינו רע. הוא מכשיר שאפשר לעשות בו הכול. מה שבני האדם עושים בעזרת הידע המדעי יכול להיות טוב או רע, וזו שאלה מוסרית: "מוסר יש רק לבני אדם, הכול תלוי בנו". לדוגמה, בעזרת גנטיקה לומדים לרפא מחלות חשוכות מרפא, אבל באותן טכניקות אפשר אולי ליצור בני אדם עם תכונות הרסניות. דוגמה נוספת: מחקר האטום הוביל למכשירים לגילוי מוקדם של סרטן, אבל גם לפצצה האטומית.`},
+{id:`c19`, t:`t3`, type:`open`, q:`תאר שני מאפיינים של הפילוסוף, שני מאפיינים של המדען ושני מאפיינים של המהנדס, לפי הסרט.`, pts:[`פילוסוף: מסיק בעזרת היגיון בלבד, בלי ניסויים`,`פילוסוף: מחפש אמת אחת וסופית / עוסק ברעיונות כלליים / מזלזל בעבודת כפיים`,`מדען: מעלה השערה ובודק בניסוי ובמדידה מדויקת`,`מדען: ספקן, הידע "סופי לעת עתה" / פותר חידות מתוך סקרנות`,`מהנדס: איש מעשה שפותר בעיות ומייצר כלים`,`מהנדס: מיישם ידע ושואל "איזו תועלת?" / בונה כלים למדענים`], model:`הפילוסוף (אריסטו) מסיק מסקנות בעזרת היגיון בלבד ולא עורך ניסויים, ומחפש את האמת האחת והסופית. הוא עוסק ברעיונות כלליים ורואה בעבודת כפיים "מלאכת עבדים". המדען (גלילאו) מעלה השערה ובודק אותה בניסוי ובמדידה מדויקת ("בכמה?"). הוא ספקן ויודע שהידע "סופי לעת עתה", ופותר חידות מתוך סקרנות. המהנדס (שירלי) הוא איש מעשה: הוא פותר בעיות מעשיות ומייצר כלים ומכשירים, מיישם ידע ושואל "איזו תועלת אפשר להפיק?". הוא גם בונה למדענים את הכלים לבדיקת התאוריות (משאבת ריק, לוויינים).`},
+{id:`c20`, t:`t3`, type:`mc`, q:`מה טען אריסטו לגבי תנועה?`, o:[`המצב הטבעי של גוף הוא מנוחה, וכדי שגוף ינוע צריך להפעיל עליו כוח`,`גופים נעים לנצח בלי כוח`,`רק גופים קלים נעים`,`הארץ סובבת סביב השמש`], a:0, ex:`גלילאו הראה (בניסוי המישור המשופע) שאריסטו טעה.`},
+{id:`c21`, t:`t3`, type:`mc`, q:`לפי קליינמן, מי חשוב יותר: המדען או המהנדס?`, o:[`שניהם חשובים. זו שאלה כמו "הביצה או התרנגולת", והם צריכים שיתוף פעולה מלא`,`רק המדען`,`רק המהנדס`,`הפילוסוף`], a:0, ex:`"המדענים פותרים חידות, והמהנדסים מנצלים את הידע הזה כדי לעשות לנו את החיים יותר קלים".`},
+{id:`c22`, t:`t3`, type:`tf`, q:`לפי הסרט, אריסטו היה אדם גדול, אבל היו דברים שבהם טעה.`, a:true, ex:`נכון. "חבל שהוא נעלב, הוא אדם גדול, אבל היו דברים שבהם טעה".`},
+
+/* ===== t4 ===== */
+{id:`d1`, t:`t4`, type:`classify`, q:`התאם כל כלי לתפקיד שלו:`, cats:[`מבחנה`,`משורה`,`מחזיק מבחנות`,`משפך`,`טפטפת`,`כף כימית`], items:[[`מדידת נפח של נוזל בדיוק`,1],[`ניסויים וחימום בכמויות קטנות`,0],[`אחיזת מבחנה חמה`,2],[`העברת נוזל לכלי עם פתח צר / סינון`,3],[`הוספת נוזל טיפה אחר טיפה`,4],[`לקיחת אבקה בלי לגעת בידיים`,5]], ex:`עבור שוב על הכרטיסים בשיעור "כלי מעבדה".`},
+{id:`d2`, t:`t4`, type:`mc`, q:`למה רוב המבחנות עשויות מזכוכית?`, o:[`כי זכוכית שקופה, עמידה בחום ולא מגיבה עם רוב החומרים`,`כי זכוכית זולה ולא נשברת`,`כי זכוכית גמישה`,`כי זכוכית מוליכה חשמל`], a:0, ex:`שקיפות + עמידות בחום + לא מגיבה. (זכוכית דווקא כן שבירה!)`},
+{id:`d3`, t:`t4`, type:`mc`, q:`למה הידית של מחזיק המבחנות עשויה מעץ?`, o:[`כי עץ מוליך חום גרוע, ולכן היד לא נכווית`,`כי עץ שקוף`,`כי עץ עמיד באש ישירה`,`כי עץ כבד`], a:0, ex:`עץ = מבודד חום.`},
+{id:`d4`, t:`t4`, type:`mc`, q:`למה המשורה גבוהה וצרה?`, o:[`כדי שהשנתות יהיו צפופות והמדידה תהיה מדויקת`,`כדי שתיכנס למקרר`,`כדי שיהיה קל לערבב בה`,`כדי לחמם בה`], a:0, ex:`בכלי צר, שינוי קטן בנפח משנה בבירור את גובה הנוזל.`},
+{id:`d5`, t:`t4`, type:`mc`, q:`למה בטפטפת יש פטמה מגומי?`, o:[`כי גומי גמיש: לוחצים, והוא חוזר לצורתו ושואב נוזל`,`כי גומי שקוף`,`כי גומי עמיד בחום גבוה`,`כי גומי זול מזכוכית`], a:0, ex:`גמישות ואלסטיות.`},
+{id:`d6`, t:`t4`, type:`mc`, q:`צריך למדוד בדיוק 37 מ״ל מים. באיזה כלי תשתמש?`, o:[`משורה`,`כוס כימית`,`ארלנמייר`,`מבחנה`], a:0, ex:`במשורה המדידה מדויקת. בכוס כימית ובארלנמייר השנתות משוערות בלבד.`},
+{id:`d7`, t:`t4`, type:`mc`, q:`מה היתרון של הצוואר הצר של הארלנמייר?`, o:[`מונע ניתזים ושפיכה, וכך אפשר לנער את הכלי ולסגור אותו בפקק`,`מאפשר למדוד בדיוק רב`,`מאפשר להכניס כף גדולה`,`מקרר את הנוזל`], a:0, ex:`בסיס רחב = יציבות; צוואר צר = בלי ניתזים.`},
+{id:`d8`, t:`t4`, type:`tf`, q:`השנתות על כוס כימית מדויקות בדיוק כמו השנתות על משורה.`, a:false, ex:`לא נכון. בכוס כימית המדידה משוערת בלבד.`},
+{id:`d9`, t:`t4`, type:`classify`, q:`מאיזה חומר עשוי בדרך כלל כל כלי?`, cats:[`זכוכית`,`פלסטיק`,`גומי`,`עץ`,`מתכת`,`חרסינה`], items:[[`מבחנה`,0],[`בקבוק שטיפה (שלוחצים עליו)`,1],[`פקק אוטם`,2],[`ידית של מחזיק מבחנות`,3],[`חצובה`,4],[`צלוחית אידוי`,5]], ex:`זכוכית = שקופה ועמידה בחום · פלסטיק = גמיש ולא נשבר · גומי = אוטם · עץ = מבודד · מתכת = חזקה ועמידה בחום · חרסינה = עמידה בחום גבוה מאוד.`},
+{id:`d10`, t:`t4`, type:`mc`, q:`מה היתרון של כלי מפלסטיק לעומת כלי מזכוכית?`, o:[`לא נשבר, קל וזול`,`עמיד יותר בחום`,`לא מגיב עם אף חומר`,`תמיד שקוף יותר`], a:0, ex:`החיסרון של פלסטיק: לא עמיד בחום.`},
+{id:`d11`, t:`t4`, type:`mc`, q:`מה התפקיד של הרשת שמניחים על החצובה?`, o:[`לפזר את החום באופן אחיד, כדי שכלי הזכוכית לא ייסדק`,`לסנן את הנוזל`,`לקרר את הכלי`,`למדוד את הטמפרטורה`], a:0, ex:`חימום ישיר ולא אחיד עלול לסדוק זכוכית.`},
+{id:`d12`, t:`t4`, type:`open`, q:`בחר כלי מעבדה אחד וכתוב: (1) למה הוא משמש, (2) מאיזה חומר הוא עשוי ומדוע נבחר החומר, (3) איך הצורה שלו מותאמת לתפקיד.`, pts:[`שם הכלי + התפקיד שלו`,`החומר שממנו הוא עשוי`,`למה נבחר החומר (תכונה של החומר)`,`איך הצורה מתאימה לתפקיד`], model:`משורה: משמשת למדידה מדויקת של נפח נוזל. היא עשויה מזכוכית, כי זכוכית שקופה (רואים את פני הנוזל ואת השנתות) ולא מגיבה עם החומרים (יש גם משורות מפלסטיק, שלא נשברות). היא גבוהה וצרה עם שנתות צפופות, ולכן המדידה מדויקת. יש לה בסיס רחב ליציבות ופייה לשפיכה נוחה.`},
+{id:`d13`, t:`t4`, type:`mc`, q:`למה צלוחית אידוי עשויה מחרסינה?`, o:[`כי חרסינה עמידה בטמפרטורות גבוהות מאוד`,`כי חרסינה גמישה`,`כי חרסינה שקופה`,`כי חרסינה מוליכה חשמל`], a:0, ex:`מאדים בה נוזלים בחימום חזק.`},
+
+/* ===== t5 ===== */
+{id:`e1`, t:`t5`, type:`mc`, q:`לפי הוראות הבטיחות של בית הספר, מתי מותר להריח חומר במעבדה, ואיך?`, o:[`רק אם קיבלנו הוראה מפורשת, ואז מריחים מרחוק בלי לשאוף חזק`,`תמיד, אם מקרבים את האף ושואפים חזק`,`מותר להריח כל חומר שאין עליו תווית`,`אסור בשום מקרה, גם כשהמורה מבקשת`], a:0, ex:`הוראה 4: אסור להריח, אלא אם ניתנה הוראה מפורשת. אז ההרחה נעשית מרחוק, ואסור להריח ע״י שאיפה חזקה.`},
+{id:`e2`, t:`t5`, type:`mc`, q:`מרתיחים חומר במבחנה. לאן צריך להיות מופנה פי המבחנה?`, o:[`הרחק ממני ומהשכנים, כדי שהחומר לא יותז עלינו`,`אליי, כדי שאראה טוב`,`לכיוון השכן שיושב ממול`,`לא משנה`], a:0, ex:`הוראה 3: מפנים את פי המבחנה כך שהחומר לא יותז לכיוון התלמיד או לכיוון שכניו.`},
+{id:`e3`, t:`t5`, type:`mc`, q:`כלי זכוכית התנפץ. איך אוספים את השברים?`, o:[`באמצעות מטאטא ויעה`,`ביד, בזהירות`,`עם מגבת נייר רטובה ביד`,`משאירים על הרצפה עד סוף השיעור`], a:0, ex:`הוראה 11: כלי זכוכית שהתנפצו אוספים באמצעות מטאטא ויעה. לא נוגעים בשברים בידיים.`},
+{id:`e4`, t:`t5`, type:`tf`, q:`תלמיד רשאי להדליק את הכוהליה בעצמו אם הוא יודע איך עושים את זה.`, a:false, ex:`לא נכון. הוראה 6: הדלקת הכוהליה (או מבער הגז) נעשית אך ורק על ידי המורה או הלבורנטית.`},
+{id:`e5`, t:`t5`, type:`tf`, q:`מותר לטעום חומר במעבדה אם הוא נראה כמו סוכר.`, a:false, ex:`לא נכון. הוראה 5: אסור לטעום חומרים במעבדה. הרבה חומרים מסוכנים נראים כמו אבקה לבנה.`},
+{id:`e6`, t:`t5`, type:`mc`, q:`מאיזה סוג חומר צריך להיות עשוי המאחז שבו מחזיקים כלי בזמן חימום?`, o:[`חומר שמוליך חום גרוע (למשל עץ)`,`חומר שמוליך חום טוב (למשל ברזל)`,`זכוכית`,`לא משנה, העיקר שיחזיק חזק`], a:0, ex:`הוראה 2: מאחז מתאים, העשוי מחומר המוליך חום גרוע, כדי שהחום לא יעבור ליד.`},
+{id:`e7`, t:`t5`, type:`mc`, q:`מה צריך לעשות תלמיד או תלמידה עם שיער ארוך לפני השימוש בכוהליה?`, o:[`לאסוף את השיער`,`להרטיב את השיער`,`לעמוד רחוק מהשולחן`,`שום דבר מיוחד`], a:0, ex:`הוראה 6 (הערה): תלמיד/ה עם שיער ארוך יאספו את שערם לפני השימוש בכוהליה, כדי שלא יישרף.`},
+{id:`e8`, t:`t5`, type:`mc`, q:`סיימתם לחמם. מה עושים עם הכוהליה?`, o:[`מכבים אותה מיד`,`משאירים אותה דולקת לניסוי הבא`,`מזיזים אותה לקצה השולחן ומשאירים דולקת`,`מחכים שתיכבה לבד`], a:0, ex:`הוראה 6: יש לכבות את הכוהליה מיד בתום החימום. אין להשאיר כוהליה בוערת כשאין בה צורך.`},
+{id:`e9`, t:`t5`, type:`mc`, q:`איפה מניחים כלים וחומרים חמים?`, o:[`על מגש מתכת`,`ישר על השולחן`,`על דף נייר`,`בתוך הכיור`], a:0, ex:`הוראה 7: כלים וחומרים חמים יש להניח על מגש מתכת.`},
+{id:`e10`, t:`t5`, type:`mc`, q:`"דנה הדליקה בעצמה את הכוהליה, החזיקה ביד את המבחנה עם המים, וכשהמים רתחו הפנתה את פי המבחנה לכיוון חברתה. בסוף השאירה את הכוהליה דולקת." כמה טעויות יש כאן?`, o:[`4`,`1`,`2`,`אין טעויות`], a:0, ex:`1) רק המורה או הלבורנטית מדליקים כוהליה. 2) מחזיקים במאחז שמוליך חום גרוע, לא ביד. 3) פי המבחנה הרחק מאנשים. 4) מכבים את הכוהליה מיד בסוף החימום.`},
+{id:`e11`, t:`t5`, type:`open`, q:`כתוב חמש הוראות בטיחות מהדף של בית הספר, והסבר למה שתיים מהן חשובות.`, pts:[`הוראה 1`,`הוראה 2`,`הוראה 3`,`הוראה 4`,`הוראה 5`,`הסבר למה שתיים מהן חשובות (מה יכול לקרות אם לא נשמור עליהן)`], model:`1) אסור לטעום חומרים במעבדה, כי הם עלולים להיות רעילים. 2) לא נוגעים בחומרים בידיים, רק עם מרית, כפית, מלקטת או מלקחיים. 3) מפנים את פי המבחנה הרחק מאנשים כשמרתיחים, כדי שהחומר לא יותז ויגרום לכוויות. 4) רק המורה או הלבורנטית מדליקים כוהליה, ומכבים אותה מיד בסוף החימום. 5) זכוכית שבורה אוספים עם מטאטא ויעה. (אפשר גם: לוקחים ציוד רק באישור · מאחז שמוליך חום גרוע · מריחים רק בהוראה ומרחוק · עובדים בתוך המגש וחם על מגש מתכת · לא מערבבים בלי הוראה · ניסויי הדגמה רק המורה · לא נכנסים לחדר ההכנה בלי אישור.)`},
+{id:`e12`, t:`t5`, type:`mc`, q:`איך לוקחים אבקה כימית מצנצנת?`, o:[`בעזרת כלי, כמו מרית או כפית, ולא בידיים`,`עם האצבעות`,`שופכים ישר לכף היד`,`מנערים את הצנצנת מעל השולחן`], a:0, ex:`הוראה 8: אין לגעת בחומרים כימיים בידיים, אלא באמצעות כלים: מרית, כפית, מלקטת, מלקחיים.`},
+{id:`e13`, t:`t5`, type:`mc`, q:`מה המטרה של כללי הבטיחות במעבדה (לפי הדף)?`, o:[`למנוע מקרי אסון ותאונות`,`שהניסוי יצליח מהר יותר`,`שהכיתה תהיה שקטה`,`לחסוך בחומרים`], a:0, ex:`"כללי הבטיחות מטרתם למנוע מקרי אסון ותאונות."`},
+{id:`e14`, t:`t5`, type:`mc`, q:`מתי מותר לקחת ציוד לניסוי?`, o:[`אחרי הסבר המורה, אחרי שהבנתי מה צריך לעשות, ואחרי שקיבלתי רשות`,`ברגע שנכנסים למעבדה`,`כשהחבר כבר לקח`,`מתי שרוצים, אם מחזירים בסוף`], a:0, ex:`הוראה 1: לוקחים ציוד רק לאחר הסבר המורה, הבנת הנדרש בניסוי, וקבלת רשות מהמורה.`},
+{id:`e15`, t:`t5`, type:`tf`, q:`מותר לערבב שני חומרים כדי לראות מה יקרה, גם בלי שהמורה ביקשה.`, a:false, ex:`לא נכון. הוראה 9: אין לערבב חומרים שונים, אלא אם ניתנה הוראה מפורשת. ערבוב יכול לגרום לתגובה מסוכנת.`},
+{id:`e16`, t:`t5`, type:`mc`, q:`מי מבצע ניסוי שמסומן "ניסוי הדגמה"?`, o:[`רק המורה או הלבורנטית`,`כל תלמיד שרוצה`,`זוגות של תלמידים`,`התלמיד הכי טוב בכיתה`], a:0, ex:`הוראה 10: ניסויים המופיעים כ"ניסויי הדגמה" יבוצעו רק ע״י המורה או הלבורנטית.`},
+{id:`e17`, t:`t5`, type:`mc`, q:`איפה עושים את הניסויים?`, o:[`בתוך מגש העבודה, בלי להוציא חפצים מהמגש לשולחן`,`על הרצפה`,`ישר על השולחן`,`ליד החלון`], a:0, ex:`הוראה 7: כל הניסויים חייבים להתבצע בתוך מגש העבודה, ואין להניח חפצים מהמגש על השולחן.`},
+{id:`e18`, t:`t5`, type:`tf`, q:`בהפסקה מותר להיכנס לחדר ההכנה כדי להחזיר כלי.`, a:false, ex:`לא נכון. הוראה 12: אסור להיכנס לחדר ההכנה בלי אישור מהמורה, ובזמן ההפסקות אין להיכנס לחדר ההכנה בכלל.`},
+{id:`e19`, t:`t5`, type:`mc`, q:`את מי שואלים לפני שנכנסים לחדר ההכנה (אחרי שהמורה אישרה)?`, o:[`את הלבורנטית`,`את חבר לשולחן`,`את המנהל`,`לא צריך לשאול אף אחד`], a:0, ex:`הוראה 12: לפני הכניסה לחדר ההכנה יש לשאול את הלבורנטית אם הכניסה אפשרית.`},
+{id:`e20`, t:`t5`, type:`classify`, q:`לפי הוראות הבטיחות: מי מבצע כל פעולה?`, cats:[`רק המורה או הלבורנטית`,`התלמיד, אחרי אישור או הוראה`], items:[[`הדלקת הכוהליה`,0],[`ניסוי הדגמה`,0],[`לקיחת ציוד לניסוי`,1],[`הרחת חומר מרחוק`,1],[`ערבוב שני חומרים`,1],[`כניסה לחדר ההכנה`,1]], ex:`רק המורה או הלבורנטית: הדלקת כוהליה (6) וניסויי הדגמה (10). כל השאר מותר לתלמיד רק אחרי הסבר, אישור או הוראה מפורשת (1, 4, 9, 12).`},
+{id:`e21`, t:`t5`, type:`mc`, q:`איזה מהכלים הבאים <b>לא</b> מופיע בהוראה "אין לגעת בחומרים כימיים בידיים, אלא באמצעות כלים"?`, o:[`משורה`,`מרית`,`מלקטת`,`מלקחיים`], a:0, ex:`הכלים בהוראה 8: מרית, כפית, מלקטת, מלקחיים. משורה היא כלי למדידת נפח נוזלים.`},
+{id:`e22`, t:`t5`, type:`open`, q:`יוסי מחמם מבחנה ומחזיק אותה במאחז מברזל. מה הבעיה, ומה היית מציע לו?`, pts:[`הבעיה: ברזל מוליך חום טוב, והחום יעבור ליד`,`ההצעה: מאחז מחומר שמוליך חום גרוע (כמו עץ)`], model:`ברזל הוא מוליך חום טוב, ולכן החום מהמבחנה יעבור דרך המאחז ליד של יוסי והוא עלול להיכוות. לפי הוראה 2 צריך מאחז העשוי מחומר המוליך חום גרוע, למשל מאחז עץ.`},
+/* ===== t6 ===== */
+{id:`f1`, t:`t6`, type:`mc`, q:`מהו נפח?`, o:[`גודל המקום (החלל) שגוף או חומר תופס`,`כמה הגוף שוקל`,`כמה הגוף חם`,`האורך של הגוף`], a:0, ex:`נפח = כמה מקום תופס הגוף.`},
+{id:`f2`, t:`t6`, type:`num`, q:`2 ליטר = ___ מ״ל`, a:2000, unit:`מ״ל`, ex:`ליטר ➜ מ״ל: כופלים ב-1000. 2 × 1000 = 2000 מ״ל.`},
+{id:`f3`, t:`t6`, type:`num`, q:`350 מ״ל = ___ ליטר`, a:0.35, unit:`ליטר`, ex:`מ״ל ➜ ליטר: מחלקים ב-1000. 350 ÷ 1000 = 0.35 ליטר.`},
+{id:`f4`, t:`t6`, type:`num`, q:`1.5 ליטר = ___ סמ״ק`, a:1500, unit:`סמ״ק`, ex:`1 ליטר = 1000 סמ״ק, ולכן 1.5 × 1000 = 1500 סמ״ק.`},
+{id:`f5`, t:`t6`, type:`num`, q:`75 סמ״ק = ___ מ״ל`, a:75, unit:`מ״ל`, ex:`1 מ״ל = 1 סמ״ק, ולכן 75 סמ״ק = 75 מ״ל.`},
+{id:`f6`, t:`t6`, type:`num`, q:`4,500 מ״ל = ___ ליטר`, a:4.5, unit:`ליטר`, ex:`4500 ÷ 1000 = 4.5 ליטר.`},
+{id:`f7`, t:`t6`, type:`num`, q:`0.25 ליטר = ___ מ״ל`, a:250, unit:`מ״ל`, ex:`0.25 × 1000 = 250 מ״ל (רבע ליטר).`},
+{id:`f8`, t:`t6`, type:`num`, q:`מה הנפח של קובייה שאורך הצלע שלה 3 ס״מ?`, a:27, unit:`סמ״ק`, ex:`3 × 3 × 3 = 27 סמ״ק.`},
+{id:`f9`, t:`t6`, type:`num`, q:`מה הנפח של קובייה שאורך הצלע שלה 5 ס״מ?`, a:125, unit:`סמ״ק`, ex:`5 × 5 × 5 = 125 סמ״ק.`},
+{id:`f10`, t:`t6`, type:`num`, q:`קובייה שאורך הצלע שלה 10 ס״מ. מה הנפח שלה <b>בליטרים</b>?`, a:1, unit:`ליטר`, ex:`10 × 10 × 10 = 1000 סמ״ק = 1 ליטר.`},
+{id:`f11`, t:`t6`, type:`num`, q:`מה הנפח של קובייה שאורך הצלע שלה 2 ס״מ? (במ״ל)`, a:8, unit:`מ״ל`, ex:`2 × 2 × 2 = 8 סמ״ק = 8 מ״ל. (לא 6!)`},
+{id:`f12`, t:`t6`, type:`mc`, q:`איך קוראים נכון את הנפח במשורה?`, o:[`העיניים בגובה פני הנוזל, וקוראים לפי התחתית של המניסקוס (העיקול)`,`מסתכלים מלמעלה וקוראים לפי השפה העליונה`,`מחזיקים את המשורה באוויר בזווית`,`קוראים לפי הקצה של העיקול בדופן`], a:0, ex:`וגם: מניחים את המשורה על משטח ישר.`},
+{id:`f13`, t:`t6`, type:`mc`, q:`איפה מניחים את המשורה בזמן המדידה?`, o:[`על משטח ישר ואופקי`,`ביד`,`על משטח משופע`,`לא משנה`], a:0, ex:`משורה מוטה נותנת קריאה שגויה.`},
+{id:`f14`, t:`t6`, type:`mc`, q:`איזו מהיחידות הבאות <b>אינה</b> יחידה של נפח?`, o:[`קילוגרם`,`ליטר`,`מ״ל`,`סמ״ק`], a:0, ex:`קילוגרם היא יחידה של מסה (משקל), לא של נפח.`},
+{id:`f15`, t:`t6`, type:`tf`, q:`1 מ״ל שווה ל-1 סמ״ק.`, a:true, ex:`נכון! וזה שימושי מאוד בחישובים.`},
+{id:`f16`, t:`t6`, type:`mc`, q:`מה גדול יותר: 0.5 ליטר או 450 מ״ל?`, o:[`0.5 ליטר (= 500 מ״ל)`,`450 מ״ל`,`הם שווים`,`אי אפשר להשוות ליטר למ״ל`], a:0, ex:`ממירים לאותה יחידה: 0.5 ל׳ = 500 מ״ל, וזה יותר מ-450 מ״ל.`},
+{id:`f17`, t:`t6`, type:`num`, q:`בבקבוק יש 1.5 ליטר מיץ. כמה כוסות של 250 מ״ל אפשר למלא ממנו?`, a:6, unit:`כוסות`, ex:`1.5 ל׳ = 1500 מ״ל. 1500 ÷ 250 = 6 כוסות.`},
+{id:`f18`, t:`t6`, type:`tf`, q:`הנפח של קובייה שאורך הצלע שלה 2 ס״מ הוא 6 סמ״ק.`, a:false, ex:`לא נכון: 2 × 2 × 2 = 8 סמ״ק.`},
+{id:`f19`, t:`t6`, type:`cyl`, q:`מה הנפח של המים במשורה? (שים לב כמה שווה כל שנת!)`, a:26, unit:`מ״ל`, ex:`בין 20 ל-30 יש 5 מרווחים, ולכן כל שנת = 10 ÷ 5 = 2 מ״ל. התחתית של המניסקוס נמצאת 3 שנתות מעל 20: 20 + 3 × 2 = 26 מ״ל.`, cyl:{lo:20,hi:30,div:5,level:3}},
+{id:`f20`, t:`t6`, type:`cyl`, q:`מה הנפח של הנוזל במשורה?`, a:45, unit:`מ״ל`, ex:`בין 40 ל-50 יש 10 מרווחים, ולכן כל שנת = 1 מ״ל. המניסקוס נמצא 5 שנתות מעל 40: 45 מ״ל.`, cyl:{lo:40,hi:50,div:10,level:5}},
+{id:`f21`, t:`t6`, type:`open`, q:`הסבר איך מודדים נכון נפח של נוזל בעזרת משורה (כתוב לפחות 4 שלבים או כללים).`, pts:[`מניחים את המשורה על משטח ישר`,`בודקים כמה שווה כל שנת`,`העיניים בגובה פני הנוזל`,`קוראים לפי התחתית של המניסקוס`,`כותבים את התוצאה עם יחידות (מ״ל)`], model:`1) בוחרים משורה בגודל מתאים ומניחים אותה על משטח ישר ואופקי. 2) בודקים כמה שווה כל שנת (מחלקים את ההפרש בין שני מספרים צמודים במספר המרווחים). 3) מורידים את העיניים לגובה פני הנוזל. 4) קוראים את הנפח לפי התחתית של המניסקוס (פני הנוזל המעוקלים). 5) רושמים את התוצאה עם יחידות, מ״ל.`},
+{id:`f22`, t:`t6`, type:`open`, q:`הסבר איך מחשבים נפח של קובייה, ותן דוגמה עם חישוב ויחידות.`, pts:[`נפח קובייה = צלע × צלע × צלע`,`דוגמה עם מספרים נכונים`,`יחידות: ס״מ ➜ סמ״ק`], model:`מודדים את אורך הצלע של הקובייה (כל הצלעות שוות) ומחשבים צלע × צלע × צלע. לדוגמה, אם הצלע היא 4 ס״מ: 4 × 4 × 4 = 64 סמ״ק (= 64 מ״ל).`},
+{id:`f23`, t:`t6`, type:`num`, q:`0.05 ליטר = ___ מ״ל`, a:50, unit:`מ״ל`, ex:`0.05 × 1000 = 50 מ״ל (מזיזים את הנקודה 3 מקומות ימינה).`},
+{id:`f25`, t:`t6`, type:`mc`, q:`לפי הספר, מהי יחידת המידה <b>הבסיסית</b> למדידת נפח?`, o:[`סמ״ק (סנטימטר מעוקב)`,`ליטר`,`מטר`,`קילוגרם`], a:0, ex:`סמ״ק = הנפח של קובייה שכל ממד שלה 1 ס״מ.`},
+{id:`f26`, t:`t6`, type:`classify`, q:`באיזו יחידת מידה כדאי למדוד כל נפח? (שאלות מהספר)`, cats:[`מ״ל / סמ״ק`,`ליטר`,`מ״ק`], items:[[`תרופה במזרק לתינוק`,0],[`נפט במכלית`,2],[`קרטון חלב`,1],[`מים בבריכה`,2],[`טיפות אוזניים`,0],[`בקבוק שתייה קלה`,1]], ex:`נפח קטן ➜ מ״ל או סמ״ק · בינוני ➜ ליטר · גדול מאוד ➜ מ״ק.`},
+{id:`f27`, t:`t6`, type:`mc`, q:`מהן <b>שנתות</b>?`, o:[`קווי חלוקה שמסומנים במרחק קבוע זה מזה ומשמשים למדידה`,`סוג של כלי מעבדה`,`יחידת מידה של נפח`,`הקו העליון של הנוזל`], a:0, ex:`השנתות על המשורה מאפשרות למדוד נפח, על הסרגל אורך ועל המדחום טמפרטורה.`},
+{id:`f28`, t:`t6`, type:`num`, q:`במשורה היו 50 מ״ל מים. הכנסנו 4 קוביות זהות, ופני המים עלו ל-82 מ״ל. מה הנפח של <b>קובייה אחת</b>?`, a:8, unit:`סמ״ק`, ex:`העלייה: 82 − 50 = 32 סמ״ק (נפח 4 הקוביות). קובייה אחת: 32 ÷ 4 = 8 סמ״ק.`},
+{id:`f29`, t:`t6`, type:`num`, q:`1 מ״ק = ___ ליטר`, a:1000, unit:`ליטר`, ex:`לפי הספר: 1 מ״ק = 1,000 ליטר.`},
+{id:`f30`, t:`t6`, type:`classify`, q:`באיזו דרך או באיזה כלי הכי מתאים למדוד את הנפח של כל אחד מאלה? (מבוסס על שאלה 3 בעמ׳ 59)`, cats:[`כוס מדידה`,`טפטפת / מזרק`,`סרגל + חישוב לפי נוסחה`,`השקעה במשורה עם מים`], items:[[`סוכר להכנת עוגה`,0],[`טיפות אוזניים`,1],[`קוביית משחק`,2],[`גוש פלסטלינה`,3],[`מים להכנת מרק`,0]], ex:`לקוביית משחק אפשר גם להשתמש בהשקעה במשורה, אבל סרגל ונוסחה הם הכי פשוטים. לגוש פלסטלינה אין צורה הנדסית, ולכן רק השקעה. (שימו לב: בכוס מדידה מודדים סוכר רק בקירוב.)`},
+{id:`f31`, t:`t6`, type:`mc`, q:`מדדנו נפח של קובייה בשתי שיטות: בסרגל ונוסחה, ובהשקעה במשורה. מה המסקנה?`, o:[`שתי השיטות נותנות תוצאה זהה או כמעט זהה, ולכן שתיהן מתאימות. הבדל קטן נובע מאי-דיוק במדידה`,`רק החישוב בנוסחה נכון`,`רק המשורה נותנת תוצאה נכונה`,`שתי השיטות נותנות תוצאות שונות לגמרי`], a:0, ex:`זו המסקנה של הפעילות בעמ׳ 60.`},
+{id:`f32`, t:`t6`, type:`open`, q:`תאר איך מוצאים את הנפח של קובייה קטנה בעזרת משורה עם מים.`, pts:[`מכניסים למשורה כמות ידועה של מים וקוראים את הנפח (למשל 50 מ״ל)`,`מכניסים את הקובייה (או כמה קוביות זהות) וקוראים שוב`,`הנפח של הקובייה = הנפח אחרי פחות הנפח לפני`,`אם הכנסנו כמה קוביות: מחלקים במספר הקוביות`], model:`מכניסים למשורה מים עד 50 מ״ל וקוראים את הנפח. מכניסים בזהירות את הקובייה וקוראים שוב את הנפח של המים והקובייה יחד, למשל 58 מ״ל. העלייה בנפח המים שווה לנפח הקובייה: 58 − 50 = 8 סמ״ק. אם הכנסנו כמה קוביות זהות, מחלקים את העלייה במספר הקוביות.`},
+{id:`f24`, t:`t6`, type:`mc`, q:`איזה כלי מתאים במיוחד למדידה <b>מדויקת</b> של נפח נוזל?`, o:[`משורה`,`כוס כימית`,`צלוחית אידוי`,`מחזיק מבחנות`], a:0, ex:`משורה = מדידה מדויקת.`},
+];
+const QI = Object.fromEntries(Q.map(q=>[q.id,q]));
+
+const EXAMS = [
+  {id:`ex1`, name:`מבחן תרגול 1`, ids:[`a1`,`a2`,`a8`,`b1`,`b2`,`b9`,`c1`,`c2`,`c4`,`c10`,`c18`,`d1`,`d2`,`d3`,`e1`,`e2`,`e10`,`e14`,`e20`,`f1`,`f2`,`f3`,`f8`,`f25`,`f27`,`f12`]},
+  {id:`ex2`, name:`מבחן תרגול 2`, ids:[`a3`,`a4`,`a6`,`b3`,`b5`,`b8`,`c3`,`c5`,`c6`,`c8`,`c11`,`c19`,`d4`,`d6`,`d9`,`e3`,`e6`,`e11`,`e15`,`e16`,`e19`,`f4`,`f6`,`f9`,`f26`,`f28`,`f16`,`f19`]},
+  {id:`ex3`, name:`מבחן תרגול 3`, ids:[`a12`,`a7`,`a9`,`b4`,`b7`,`b6`,`c7`,`c12`,`c14`,`c15`,`c21`,`c17`,`d5`,`d7`,`d12`,`e4`,`e8`,`e7`,`e13`,`e17`,`e22`,`f7`,`f10`,`f29`,`f30`,`f31`,`f17`,`f20`,`f21`,`f22`]},
+  {id:`exR`, name:`🎲 מבחן אקראי`, random:true},
+];
+
+const CARDS = [
+  [`t1`,`מהו מדע?`,`דרך לחקור ולהבין את העולם בעזרת שאלות, תצפיות, ניסויים ומדידות`],
+  [`t1`,`כימיה חוקרת…`,`מבנה החומר, הרכב החומרים, תכונותיהם והשינויים בהם (וגם מפתחת חומרים חדשים)`],
+  [`t1`,`פיזיקה חוקרת…`,`שאלות בסיסיות על היקום: תנועה, כוחות, אנרגיה, אור וחשמל`],
+  [`t1`,`ביולוגיה חוקרת…`,`יצורים חיים`],
+  [`t1`,`שני המושגים החיוניים לתיאור היקום (לפי הספר)`,`חומר ואנרגיה`],
+  [`t1`,`שלבי החקר המדעי`,`שאלת חקר ➜ השערה ➜ ניסוי ➜ תוצאות ➜ מסקנה`],
+  [`t1`,`גורם משפיע / גורם מושפע`,`משפיע = מה שמשנים בכוונה · מושפע = מה שמודדים`],
+  [`t1`,`השערה`,`תשובה אפשרית לשאלת החקר, שמבוססת על ידע קודם ונבדקת בניסוי`],
+  [`t2`,`טכנולוגיה`,`שימוש בידע כדי לפתח מוצרים, כלים ותהליכים שפותרים בעיות ומספקים צרכים`],
+  [`t2`,`התוצר של מדע / של טכנולוגיה`,`מדע ➜ ידע (חוקים, תאוריות) · טכנולוגיה ➜ מוצרים, מכשירים ותהליכים`],
+  [`t2`,`השאלה של המדען / של המהנדס`,`מדען: "אם אעשה כך וכך, מה יקרה?" · מהנדס: "קרה כך וכך, מה אפשר לעשות עם זה?"`],
+  [`t2`,`דוגמה: מדע ➜ טכנולוגיה`,`הרץ גילה גלים אלקטרומגנטיים ➜ רדיו וטלפון סלולרי`],
+  [`t2`,`דוגמה: טכנולוגיה ➜ מדע`,`משאבת ריק, טלסקופ, מיקרוסקופ, מאיץ חלקיקים`],
+  [`t2`,`טכנולוגיה: טוב או רע?`,`לא טובה ולא רעה בעצמה: תלוי בשימוש של בני האדם (+ שתי דוגמאות)`],
+  [`t3`,`"סופי לעת עתה"`,`ידע מדעי נכון עד שמגיעות ראיות חדשות. אף פרט בו אינו ודאי לחלוטין`],
+  [`t3`,`הפילוסוף (אריסטו)`,`היגיון בלבד, בלי ניסויים · מחפש אמת סופית · רעיונות כלליים · "מלאכת עבדים"`],
+  [`t3`,`המדען (גלילאו)`,`השערה ➜ ניסוי ➜ מדידה מדויקת ("בכמה?") · ספקן · פותר חידות מתוך סקרנות`],
+  [`t3`,`המהנדס (שירלי)`,`איש מעשה · פותר בעיות · מייצר כלים · שואל "איזו תועלת?" · בונה כלים למדענים`],
+  [`t3`,`למה נוצה נופלת לאט?`,`חיכוך (התנגדות) האוויר. בריק הכול נופל באותה מהירות`],
+  [`t3`,`ברונזה`,`סגסוגת: 9 מנות נחושת + מנה 1 של בדיל. קשה וחזקה יותר מהן`],
+  [`t3`,`"לדעת" מול "להבין"`,`הנפח יודע איך לעשות ברונזה, אבל לא מבין למה (המדע מסביר בעזרת אטומים)`],
+  [`t3`,`המישור המשופע`,`בלי חיכוך גוף ממשיך לנוע לנצח בלי כוח. אריסטו טעה!`],
+  [`t3`,`"המהנדסים חסכו 300 שנה"`,`בנו משאבת ריק ובדקו את ההשערה של גלילאו על כדור הארץ`],
+  [`t3`,`ניוטון והלוויין`,`פגז מהיר מספיק יקיף את כדור הארץ, וכך ניבא ניוטון את הלוויין`],
+  [`t3`,`המדע: טוב או רע?`,`לא טוב ולא רע, הוא מכשיר. שאלה מוסרית: "הכול תלוי בנו" (דוגמה: גנטיקה)`],
+  [`t4`,`משורה`,`מדידה מדויקת של נפח נוזל · גבוהה וצרה · זכוכית או פלסטיק`],
+  [`t4`,`מבחנה`,`ניסויים וחימום בכמויות קטנות · זכוכית: שקופה, עמידה בחום ולא מגיבה`],
+  [`t4`,`מחזיק מבחנות`,`אחיזת מבחנה חמה · ידית מעץ: מוליך חום גרוע`],
+  [`t4`,`כוס כימית`,`ערבוב, חימום ותמיסות · מדידה משוערת בלבד · שפך לשפיכה`],
+  [`t4`,`ארלנמייר`,`צוואר צר: בלי ניתזים, אפשר לנער · בסיס רחב: יציב`],
+  [`t4`,`טפטפת`,`טיפות וכמויות קטנות · פטמת גומי גמישה לשאיבה`],
+  [`t4`,`למה זכוכית?`,`שקופה · עמידה בחום · לא מגיבה · קלה לניקוי (חיסרון: שבירה)`],
+  [`t4`,`למה פלסטיק?`,`לא נשבר · קל · זול · גמיש (חיסרון: לא עמיד בחום)`],
+  [`t4`,`למה גומי?`,`גמיש ואלסטי · אוטם`],
+  [`t5`,`מטרת כללי הבטיחות`,`למנוע מקרי אסון ותאונות`],
+  [`t5`,`מתי לוקחים ציוד?`,`אחרי הסבר המורה · אחרי שהבנתי את הניסוי · אחרי שקיבלתי רשות`],
+  [`t5`,`מאחז לחימום`,`מחומר שמוליך חום גרוע (למשל עץ)`],
+  [`t5`,`הרתחה במבחנה`,`מפנים את פי המבחנה כך שלא יותז עליי או על השכנים`],
+  [`t5`,`להריח חומר?`,`רק בהוראה מפורשת · מרחוק · בלי שאיפה חזקה`],
+  [`t5`,`לטעום חומר?`,`אסור! אף פעם`],
+  [`t5`,`כוהליה: 3 כללים`,`רק המורה/לבורנטית מדליקים · מכבים מיד בסוף החימום · שיער ארוך אסוף`],
+  [`t5`,`מגש העבודה`,`כל הניסויים בתוך המגש · חם ➜ על מגש מתכת`],
+  [`t5`,`לגעת בחומרים?`,`לא בידיים! רק מרית, כפית, מלקטת, מלקחיים`],
+  [`t5`,`לערבב חומרים?`,`רק בהוראה מפורשת`],
+  [`t5`,`ניסויי הדגמה`,`רק המורה או הלבורנטית`],
+  [`t5`,`זכוכית שהתנפצה`,`אוספים עם מטאטא ויעה`],
+  [`t5`,`חדר ההכנה`,`רק באישור המורה · שואלים את הלבורנטית · לא בהפסקות`],
+  [`t6`,`מהו נפח?`,`גודל המקום (החלל) שגוף או חומר תופס`],
+  [`t6`,`1 ליטר = ? מ״ל`,`1,000 מ״ל (= 1,000 סמ״ק)`],
+  [`t6`,`1 מ״ל = ? סמ״ק`,`1 סמ״ק`],
+  [`t6`,`ליטר ➜ מ״ל`,`כופלים ב-1000 (המספר גדל)`],
+  [`t6`,`מ״ל ➜ ליטר`,`מחלקים ב-1000 (המספר קטן)`],
+  [`t6`,`נפח קובייה`,`צלע × צלע × צלע (ס״מ ➜ סמ״ק)`],
+  [`t6`,`קריאת משורה`,`משטח ישר · עיניים בגובה הנוזל · תחתית המניסקוס · ערך השנת`],
+  [`t6`,`מניסקוס`,`פני הנוזל המעוקלים במשורה. קוראים לפי התחתית שלו`],
+  [`t6`,`יחידת המידה הבסיסית לנפח`,`סמ״ק`],
+  [`t6`,`1 מ״ק = ? ליטר`,`1,000 ליטר`],
+  [`t6`,`מ״ל / ליטר / מ״ק: מתי?`,`מ״ל = קטן (תרופה) · ליטר = בינוני (קרטון חלב) · מ״ק = גדול מאוד (בריכה, מכלית)`],
+  [`t6`,`שנתות`,`קווי חלוקה שמסומנים במרחק קבוע זה מזה ומשמשים למדידה`],
+  [`t6`,`נפח קובייה בהשקעה במשורה`,`נפח אחרי − נפח לפני = נפח הקוביות (מחלקים במספר הקוביות)`],
+  [`t6`,`כלים למדידת נפח (לפי הספר)`,`משורה, מזרק, פיפטה, כוס מדידה, כוס כימית, בקבוק קוני`],
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const LS = `madaim-z-v1`;
+let state = JSON.parse(localStorage.getItem(LS) || `{}`);
+state.q = state.q || {};          // qid -> best fraction 0..1
+state.exams = state.exams || {};  // examId -> best score
+state.trBest = state.trBest || 0;
+const save = ()=>{ localStorage.setItem(LS, JSON.stringify(state)); updateProgress(); };
+function resetProgress(){ if(confirmReset()){ state={q:{},exams:{},trBest:0}; save(); renderHome(); } }
+function confirmReset(){ const b=event.target; if(b.dataset.armed){return true;} b.dataset.armed=1; b.textContent=`לחץ שוב לאישור`; setTimeout(()=>{b.textContent=`איפוס התקדמות`;delete b.dataset.armed},3000); return false; }
+
+function topicPct(t){ const qs=Q.filter(q=>q.t===t); const s=qs.reduce((a,q)=>a+(state.q[q.id]||0),0); return Math.round(100*s/qs.length); }
+function updateProgress(){
+  const s=Q.reduce((a,q)=>a+(state.q[q.id]||0),0); const p=Math.round(100*s/Q.length);
+  document.getElementById(`globalProgress`).style.width=p+`%`;
+  document.getElementById(`globalProgressTxt`).textContent=`שליטה בחומר: ${p}% (לפי השאלות שפתרת נכון)`;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+const VIEWS = [[`home`,`🏠 בית`],...TOPICS.map((t,i)=>[t.id,`${i+1}. ${t.name}`]),[`trainer`,`🎯 מאמן המרות`],[`cards`,`🃏 כרטיסיות`],[`exams`,`📝 מבחנים`]];
+function buildNav(){
+  document.getElementById(`nav`).innerHTML = VIEWS.map(([id,l])=>`<button data-v="${id}" onclick="go('${id}')">${l}</button>`).join(``);
+}
+function go(v){
+  document.querySelectorAll(`section.view`).forEach(s=>s.classList.toggle(`active`, s.id===`view-`+v));
+  document.querySelectorAll(`nav button`).forEach(b=>b.classList.toggle(`active`, b.dataset.v===v));
+  if(v===`home`) renderHome();
+  if(v===`exams` && !examActive) renderExamMenu();
+  location.hash = v; window.scrollTo({top:0});
+}
+
+function renderHome(){
+  document.getElementById(`homeTopics`).innerHTML = TOPICS.map((t,i)=>`
+    <div class="tcard" onclick="go('${t.id}')">
+      <div class="topic-num" style="background:${t.color}">${i+1}</div>
+      <div style="flex:1"><b>${t.icon} ${t.name}</b><div class="meter"><i style="width:${topicPct(t.id)}%"></i></div><div class="small">${topicPct(t.id)}% שליטה</div></div>
+    </div>`).join(``);
+}
+
+/* ============================================================
+   QUESTION ENGINE
+   ============================================================ */
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function parseNum(s){ s=String(s).trim().replace(/,/g,``).replace(/\s/g,``); if(s===``) return NaN; return Number(s); }
+let UID=0;
+
+function cylSVG(c){
+  const top=30,bottom=200,x=70,w=60; // draw region between lo-10 and hi+10 area: show lo..hi plus one division band above/below
+  const total=c.div+4; const step=(bottom-top)/total; // marks from lo - 2 divisions to hi + 2 divisions
+  let marks=``;
+  for(let k=0;k<=total;k++){
+    const y=bottom-k*step; const valIdx=k-2; // valIdx 0 => lo
+    const major = (valIdx===0||valIdx===c.div);
+    marks+=`<line x1="${x}" y1="${y}" x2="${x+(major?26:14)}" y2="${y}" stroke="#495057" stroke-width="1.5"/>`;
+    if(valIdx===0) marks+=`<text x="${x+30}" y="${y+4}" font-size="12" font-family="Arial">${c.lo}</text>`;
+    if(valIdx===c.div) marks+=`<text x="${x+30}" y="${y+4}" font-size="12" font-family="Arial">${c.hi}</text>`;
+  }
+  const ly=bottom-(c.level+2)*step;
+  return `<svg viewBox="0 0 200 230" width="200" height="230"><rect x="${x}" y="10" width="${w}" height="200" rx="3" fill="#f8fbff" stroke="#495057" stroke-width="2"/>
+  <path d="M${x} ${ly-9} Q${x+w/2} ${ly+9} ${x+w} ${ly-9} L${x+w} 208 L${x} 208 Z" fill="#74c0fc" opacity=".8"/>
+  <path d="M${x} ${ly-9} Q${x+w/2} ${ly+9} ${x+w} ${ly-9}" fill="none" stroke="#1864ab" stroke-width="2"/>${marks}
+  <rect x="40" y="210" width="120" height="10" fill="#adb5bd"/></svg>`;
+}
+
+function makeQ(q, n, mode){
+  const id=`q${++UID}`; const el=document.createElement(`div`); el.className=`q`; el.id=id;
+  const T=TOPIC[q.t];
+  let body=``;
+  const typeLbl={mc:`בחירה מרובה`,tf:`נכון / לא נכון`,num:`חישוב`,cyl:`קריאת משורה`,classify:`התאמה`,open:`שאלה פתוחה`}[q.type];
+  if(q.type===`mc`){
+    const order=shuffle(q.o.map((_,i)=>i));
+    body=order.map(i=>`<label class="opt" data-i="${i}"><input type="radio" name="${id}" value="${i}"><span>${q.o[i]}</span></label>`).join(``);
+  } else if(q.type===`tf`){
+    body=[[`true`,`✔️ נכון`],[`false`,`✖️ לא נכון`]].map(([v,l])=>`<label class="opt" data-i="${v}"><input type="radio" name="${id}" value="${v}"><span>${l}</span></label>`).join(``)
+      + `<div class="small" style="margin-top:4px">💡 במבחן אמיתי: אם המשפט לא נכון, כתוב גם את התיקון!</div>`;
+  } else if(q.type===`num`||q.type===`cyl`){
+    body=(q.type===`cyl`?`<div>${cylSVG(q.cyl)}</div>`:``)+`<div class="row"><input type="text" inputmode="decimal" style="width:140px"> <span>${q.unit}</span></div>`;
+  } else if(q.type===`classify`){
+    body=shuffle(q.items.map((it,i)=>i)).map(i=>`<div class="cl-row"><span>${q.items[i][0]}</span><select data-i="${i}"><option value="">בחר…</option>${q.cats.map((c,ci)=>`<option value="${ci}">${c}</option>`).join(``)}</select></div>`).join(``);
+  } else if(q.type===`open`){
+    body=`<textarea placeholder="כתוב כאן תשובה מלאה, כמו במבחן…"></textarea>`;
+  }
+  el.innerHTML=`<div class="qh"><b>שאלה ${n}</b><span class="chip" style="background:${T.color}">${T.name}</span><span>${typeLbl}</span></div>
+    <div class="qt">${q.q}</div><div class="qb">${body}</div>
+    ${mode===`practice`?`<div class="row" style="margin-top:10px"><button class="btn" data-check>בדוק</button></div>`:``}
+    <div class="fb"></div>`;
+
+  const api={q, el, graded:false, score:0, max:1, onchange:null};
+  api.grade=function(){
+    const fb=el.querySelector(`.fb`); let got=0; let html=``;
+    if(q.type===`mc`||q.type===`tf`){
+      const sel=el.querySelector(`input:checked`); const correct = q.type===`mc`? String(q.a) : String(q.a);
+      el.querySelectorAll(`.opt`).forEach(o=>{ o.classList.remove(`correct`,`wrong`); if(o.dataset.i===correct) o.classList.add(`correct`); else if(sel && o.dataset.i===sel.value) o.classList.add(`wrong`); });
+      got = sel && sel.value===correct ? 1 : 0;
+      html = (got?`✅ נכון! `:sel?`❌ לא נכון. `:`⚠️ לא ענית. `)+q.ex;
+    } else if(q.type===`num`||q.type===`cyl`){
+      const inp=el.querySelector(`input`); const v=parseNum(inp.value);
+      got = Math.abs(v-q.a) <= Math.abs(q.a)*1e-6+1e-9 ? 1 : 0;
+      inp.classList.toggle(`correct`,!!got); inp.classList.toggle(`wrong`,!got);
+      html=(got?`✅ נכון! `:`❌ התשובה: <b>${q.a} ${q.unit}</b>. `)+q.ex;
+    } else if(q.type===`classify`){
+      let c=0; el.querySelectorAll(`select`).forEach(s=>{ const ok=s.value!==`` && Number(s.value)===q.items[s.dataset.i][1]; s.classList.toggle(`correct`,ok); s.classList.toggle(`wrong`,!ok); if(ok)c++;
+        if(!ok){ let h=s.parentElement.querySelector(`.hint`); if(!h){h=document.createElement(`small`);h.className=`hint`;h.style.color=`var(--ok)`;s.parentElement.appendChild(h);} h.textContent=`✔ `+q.cats[q.items[s.dataset.i][1]]; } });
+      got=c/q.items.length; html=`${c} מתוך ${q.items.length} נכונים. `+q.ex;
+    } else if(q.type===`open`){
+      if(!el.querySelector(`.model`)){
+        const box=document.createElement(`div`);
+        box.innerHTML=`<div class="model"><b>📝 תשובה לדוגמה:</b><br>${q.model}</div>
+          <div style="margin-top:8px"><b>✔️ סמן אילו נקודות כללת בתשובה שלך (בכנות!):</b>${q.pts.map((p,i)=>`<label class="chk"><input type="checkbox" data-p="${i}"> <span>${p}</span></label>`).join(``)}</div>`;
+        el.querySelector(`.qb`).appendChild(box);
+        box.querySelectorAll(`input[type=checkbox]`).forEach(cb=>cb.addEventListener(`change`,()=>{ api.score=selfScore(); record(); if(api.onchange) api.onchange(); fb.innerHTML=`ציון עצמי: ${Math.round(api.score*100)}%`; }));
+      }
+      got=selfScore(); html=`השווה לתשובה לדוגמה וסמן את הנקודות שכללת. ציון עצמי: ${Math.round(got*100)}%`;
+    }
+    function selfScore(){ const cbs=el.querySelectorAll(`input[data-p]`); let c=0; cbs.forEach(x=>{if(x.checked)c++}); return cbs.length? c/q.pts.length:0; }
+    function record(){ state.q[q.id]=Math.max(state.q[q.id]||0, api.score); save(); }
+    api.score=got; api.graded=true;
+    fb.className=`fb show `+(q.type===`open`?`neutral`:got===1?`ok`:got>0?`neutral`:`bad`); fb.innerHTML=html;
+    record();
+    return got;
+  };
+  if(mode===`practice`) el.querySelector(`[data-check]`).onclick=()=>api.grade();
+  return api;
+}
+
+function renderQuiz(t){
+  const box=document.getElementById(`quiz-`+t); box.innerHTML=``;
+  Q.filter(q=>q.t===t).forEach((q,i)=>box.appendChild(makeQ(q,i+1,`practice`).el));
+}
+
+/* ============================================================
+   EXAMS
+   ============================================================ */
+let examActive=null, examTimerInt=null;
+function renderExamMenu(){
+  document.getElementById(`examMenu`).style.display=``; document.getElementById(`examRun`).style.display=`none`;
+  document.getElementById(`examCards`).innerHTML=EXAMS.map(e=>{
+    const n=e.random?20:e.ids.length; const best=state.exams[e.id];
+    return `<div class="tcard" onclick="examStart('${e.id}')"><div class="topic-num" style="background:var(--brand)">📝</div>
+      <div style="flex:1"><b>${e.name}</b><div class="small">${n} שאלות · כל 6 הנושאים${e.random?` · שאלות אחרות בכל פעם`:``}</div>
+      <div class="small">${best!=null?`הציון הכי טוב: <b>${best}</b>`:`עוד לא נבחנת`}</div></div></div>`;}).join(``);
+}
+function examStart(eid){
+  const e=EXAMS.find(x=>x.id===eid); let ids;
+  if(e.random){ ids=[]; TOPICS.forEach(t=>{ const pool=shuffle(Q.filter(q=>q.t===t.id)); ids.push(...pool.slice(0, t.id===`t3`||t.id===`t6`?4:3).map(q=>q.id)); }); ids=ids.slice(0,20); }
+  else ids=e.ids;
+  examActive={e, items:[], t0:Date.now(), done:false};
+  document.getElementById(`examMenu`).style.display=`none`; document.getElementById(`examRun`).style.display=``;
+  document.getElementById(`examTitle`).textContent=e.name; document.getElementById(`examResult`).innerHTML=``;
+  const box=document.getElementById(`examQs`); box.innerHTML=``;
+  ids.forEach((id,i)=>{ const api=makeQ(QI[id],i+1,`exam`); examActive.items.push(api); box.appendChild(api.el); });
+  document.getElementById(`examSubmit`).style.display=``;
+  clearInterval(examTimerInt);
+  examTimerInt=setInterval(()=>{ const s=Math.floor((Date.now()-examActive.t0)/1000); document.getElementById(`examTimer`).textContent=`⏱️ ${String(Math.floor(s/60)).padStart(2,`0`)}:${String(s%60).padStart(2,`0`)}`; },1000);
+  window.scrollTo({top:0});
+}
+function examSubmit(){
+  if(!examActive) return; clearInterval(examTimerInt);
+  examActive.items.forEach(a=>{ a.grade(); a.onchange=examScore; });
+  examActive.done=true; document.getElementById(`examSubmit`).style.display=`none`;
+  examScore();
+  document.getElementById(`examResult`).scrollIntoView({behavior:`smooth`});
+}
+function examScore(){
+  const items=examActive.items; const tot=items.reduce((a,x)=>a+x.score,0); const sc=Math.round(100*tot/items.length);
+  const best=state.exams[examActive.e.id]; if(best==null||sc>best){ state.exams[examActive.e.id]=sc; save(); }
+  const byT={}; items.forEach(a=>{ const t=a.q.t; byT[t]=byT[t]||[0,0]; byT[t][0]+=a.score; byT[t][1]++; });
+  const weak=TOPICS.filter(t=>byT[t.id] && byT[t.id][0]/byT[t.id][1] < .8);
+  const hasOpen=items.some(a=>a.q.type===`open`);
+  const msg = sc>=90?`🏆 מצוין! אתה מוכן!`:sc>=75?`👏 יפה מאוד! עוד חזרה קטנה על הנקודות החלשות.`:sc>=55?`💪 בדרך הנכונה. חזור על הנושאים שמסומנים למטה ונסה שוב.`:`📚 כדאי לחזור על השיעורים ואז לנסות שוב. אתה יכול!`;
+  document.getElementById(`examResult`).innerHTML=`<div class="card center">
+    <div class="small">הציון שלך</div><div class="score-big" style="color:${sc>=75?`var(--ok)`:sc>=55?`var(--warn)`:`var(--bad)`}">${sc}</div><p>${msg}</p>
+    ${hasOpen?`<p class="small">✍️ בשאלות הפתוחות סמן את הנקודות שכללת, והציון יתעדכן.</p>`:``}
+    <table style="max-width:520px;margin:10px auto"><tr><th>נושא</th><th>ציון</th></tr>
+    ${TOPICS.filter(t=>byT[t.id]).map(t=>{const p=Math.round(100*byT[t.id][0]/byT[t.id][1]);return `<tr><td>${t.name}</td><td style="color:${p>=80?`var(--ok)`:`var(--bad)`}"><b>${p}</b></td></tr>`;}).join(``)}</table>
+    ${weak.length?`<p>📌 כדאי לחזור על: ${weak.map(t=>`<button class="btn ghost" style="padding:3px 10px;margin:2px" onclick="examExit();go('${t.id}')">${t.name}</button>`).join(``)}</p>`:``}
+    <div class="row" style="justify-content:center"><button class="btn" onclick="examStart('${examActive.e.id}')">🔄 נסה שוב</button><button class="btn ghost" onclick="examExit()">חזרה לרשימת המבחנים</button></div></div>`;
+}
+function examExit(){ clearInterval(examTimerInt); examActive=null; renderExamMenu(); }
+
+/* ============================================================
+   FLASHCARDS
+   ============================================================ */
+let fcDeck=[], fcCur=null;
+function fcInit(){
+  const s=document.getElementById(`fcTopic`);
+  s.innerHTML=`<option value="all">כל הנושאים</option>`+TOPICS.map(t=>`<option value="${t.id}">${t.name}</option>`).join(``);
+  fcStart();
+}
+function fcStart(){ const t=document.getElementById(`fcTopic`).value; fcDeck=shuffle(CARDS.filter(c=>t===`all`||c[0]===t)); fcNext(); }
+function fcNext(){
+  const fc=document.getElementById(`fc`); fc.classList.remove(`flip`);
+  if(!fcDeck.length){ document.getElementById(`fcFront`).innerHTML=`🎉 סיימת את כל הכרטיסיות!<br><button class="btn" style="margin-top:12px" onclick="event.stopPropagation();fcStart()">שוב מההתחלה</button>`; document.getElementById(`fcBack`).innerHTML=``; document.getElementById(`fcCount`).textContent=``; fcCur=null; return; }
+  fcCur=fcDeck.shift();
+  setTimeout(()=>{ document.getElementById(`fcFront`).innerHTML=`<small>${TOPIC[fcCur[0]].name}</small>${fcCur[1]}`; document.getElementById(`fcBack`).innerHTML=`<small>${TOPIC[fcCur[0]].name}</small>${fcCur[2]}`; },150);
+  document.getElementById(`fcCount`).textContent=`נשארו ${fcDeck.length+1} כרטיסים`;
+}
+function fcAnswer(knew){ if(!fcCur) return; if(!knew) fcDeck.splice(Math.min(3,fcDeck.length),0,fcCur); fcNext(); }
+
+/* ============================================================
+   TRAINER
+   ============================================================ */
+let tr={streak:0,right:0,total:0,cur:null};
+function trGen(){
+  const r=(a)=>a[Math.floor(Math.random()*a.length)];
+  const kinds=[
+    ()=>{ const L=r([0.2,0.25,0.3,0.5,0.75,1,1.2,1.5,2,2.5,3,0.05,0.125,4.2]); return {q:`${L} ליטר = ? מ״ל`,a:+(L*1000).toFixed(3),u:`מ״ל`,ex:`${L} × 1000 = ${+(L*1000).toFixed(3)}`}; },
+    ()=>{ const m=r([100,150,200,250,330,350,500,600,750,1200,1500,2000,2500,80,45]); return {q:`${m} מ״ל = ? ליטר`,a:+(m/1000).toFixed(4),u:`ליטר`,ex:`${m} ÷ 1000 = ${+(m/1000).toFixed(4)}`}; },
+    ()=>{ const L=r([0.5,1,1.5,2,0.25,3]); return {q:`${L} ליטר = ? סמ״ק`,a:L*1000,u:`סמ״ק`,ex:`1 ל׳ = 1000 סמ״ק, ולכן ${L} × 1000 = ${L*1000}`}; },
+    ()=>{ const c=r([5,12,40,75,125,250,500]); return {q:`${c} סמ״ק = ? מ״ל`,a:c,u:`מ״ל`,ex:`1 סמ״ק = 1 מ״ל`}; },
+    ()=>{ const c=r([500,1000,2000,250,1500]); return {q:`${c} סמ״ק = ? ליטר`,a:c/1000,u:`ליטר`,ex:`${c} ÷ 1000 = ${c/1000}`}; },
+    ()=>{ const a=r([1,2,3,4,5,6,10]); return {q:`נפח של קובייה שאורך הצלע שלה ${a} ס״מ = ?`,a:a*a*a,u:`סמ״ק`,ex:`${a} × ${a} × ${a} = ${a*a*a}`}; },
+  ];
+  return r(kinds)();
+}
+function trNext(){ tr.cur=trGen(); document.getElementById(`trQ`).textContent=tr.cur.q; document.getElementById(`trUnit`).textContent=tr.cur.u; const i=document.getElementById(`trIn`); i.value=``; i.focus(); document.getElementById(`trFb`).className=`fb`; }
+function trCheck(){
+  const v=parseNum(document.getElementById(`trIn`).value); if(isNaN(v)) return;
+  const ok=Math.abs(v-tr.cur.a)<=Math.abs(tr.cur.a)*1e-6+1e-9; tr.total++;
+  const fb=document.getElementById(`trFb`);
+  if(ok){ tr.right++; tr.streak++; if(tr.streak>state.trBest){state.trBest=tr.streak;save();} fb.className=`fb show ok`; fb.innerHTML=`✅ נכון! ${tr.cur.ex} ${tr.streak===10?`<br>🏆 10 ברצף! אלוף ההמרות!`:``}`; setTimeout(trNext,1100); }
+  else { tr.streak=0; fb.className=`fb show bad`; fb.innerHTML=`❌ התשובה: <b>${tr.cur.a} ${tr.cur.u}</b> · ${tr.cur.ex}`; }
+  [[`trStreak`,tr.streak],[`trBest`,state.trBest],[`trRight`,tr.right],[`trTotal`,tr.total]].forEach(([i,v])=>document.getElementById(i).textContent=v);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function renderTools(){
+  document.getElementById(`toolsGrid`).innerHTML=TOOLS.map(t=>`<div class="tool">${t.svg}<div><h4>${t.n}</h4>
+    <div>${t.m.map(([c,l])=>`<span class="tag ${c}">${l}</span>`).join(``)}</div>
+    <p><b>תפקיד:</b> ${t.use}</p><p><b>למה החומר:</b> ${t.why}</p><p><b>התאמה לתפקיד:</b> ${t.fit}</p></div></div>`).join(``);
+}
+// On GitHub Pages the local mp4 isn't published, so play the episode from YouTube instead.
+const YT_ID=`-_mYp4SyxEM`, ON_PAGES=location.hostname.endsWith(`github.io`);
+function ytEmbed(start, autoplay){ return `https://www.youtube-nocookie.com/embed/${YT_ID}?rel=0&start=${start}${autoplay?`&autoplay=1`:``}`; }
+function renderChapters(){
+  const v=document.getElementById(`sofiVideo`);
+  if(ON_PAGES && v.tagName===`VIDEO`){
+    const f=document.createElement(`iframe`); f.id=`sofiVideo`; f.src=ytEmbed(0,false);
+    f.allow=`autoplay; encrypted-media; fullscreen`; f.allowFullscreen=true;
+    f.style.cssText=`width:100%;aspect-ratio:16/9;border:0;border-radius:14px;background:#000`;
+    v.replaceWith(f);
+  }
+  document.getElementById(`chapters`).innerHTML=CHAPTERS.map(([l,s])=>`<button onclick="seek(${s})">${Math.floor(s/60)}:${String(s%60).padStart(2,`0`)} · ${l}</button>`).join(``);
+}
+function seek(s){ const v=document.getElementById(`sofiVideo`); if(ON_PAGES) v.src=ytEmbed(s,true); else { v.currentTime=s; v.play(); } v.scrollIntoView({behavior:`smooth`,block:`center`}); }
+
+buildNav(); renderTools(); renderChapters(); TOPICS.forEach(t=>renderQuiz(t.id)); fcInit(); trNext(); updateProgress();
+document.getElementById(`trBest`).textContent=state.trBest;
+const h0=location.hash.slice(1); go(VIEWS.some(v=>v[0]===h0) ? h0 : `home`);
+</script>
+</body>
+</html>
